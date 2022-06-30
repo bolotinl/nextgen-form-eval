@@ -113,9 +113,9 @@ class BMI_CFE():
         
         # ________________________________________________
         # Time control
-        self.time_step_size = 3600
-        self.timestep_h = self.time_step_size / 3600.0
-        self.timestep_d = self.timestep_h / 24.0
+        self.time_step_size = 1
+        self.timestep_h = self.time_step_size
+        self.timestep_d = self.timestep_h * 24.0
         self.current_time_step = 0
         self.current_time = pd.Timestamp(year=1989, month=10, day=1, hour=4)
         
@@ -196,14 +196,15 @@ class BMI_CFE():
         self.vol_in_gw_start           = self.gw_reservoir['storage_m']
 
         self.soil_reservoir = {'is_exponential':False,
-                               'storage_max_m':self.soil_params['smcmax'] * self.soil_params['D'],
-                               'coeff_primary':self.soil_params['satdk'] * self.soil_params['slop'] * 3600.0,
-                               'exponent_primary':1.0,
-                               'storage_threshold_primary_m':self.soil_params['smcmax'] * storage_thresh_pow_term*
+                                'wilting_point_m':self.soil_params['wltsmc'],
+                                'storage_max_m':self.soil_params['smcmax'] * self.soil_params['D'],
+                                'coeff_primary':self.soil_params['satdk'] * self.soil_params['slop'] * 3600.0,
+                                'exponent_primary':1.0,
+                                'storage_threshold_primary_m':self.soil_params['smcmax'] * storage_thresh_pow_term*
                                                              (upper_lim-lower_lim),
-                               'coeff_secondary':0.01,
-                               'exponent_secondary':1.0,
-                               'storage_threshold_secondary_m':lateral_flow_threshold_storage_m}
+                                'coeff_secondary':0.01,
+                                'exponent_secondary':1.0,
+                                'storage_threshold_secondary_m':lateral_flow_threshold_storage_m}
         self.soil_reservoir['storage_m'] = self.soil_reservoir['storage_max_m'] * 0.667
         self.volstart                   += self.soil_reservoir['storage_m']
         self.vol_soil_start              = self.soil_reservoir['storage_m']
