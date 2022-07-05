@@ -95,11 +95,13 @@ htmlcov/
 nosetests.xml
 coverage.xml
 
-# Output from GIUH - python functions #
+# Output Files #
 ###################################
 *.png
 *.csv
 *.txt
+*.npy
+*.json
 
 # Front-End #
 #############
