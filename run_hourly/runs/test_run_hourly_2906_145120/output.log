@@ -1,0 +1,58 @@
+2022-06-29 14:51:20,848: Logging to /home/ottersloth/neuralhydrology/run_hourly/runs/test_run_hourly_2906_145120/output.log initialized.
+2022-06-29 14:51:20,848: ### Folder structure created at /home/ottersloth/neuralhydrology/run_hourly/runs/test_run_hourly_2906_145120
+2022-06-29 14:51:20,848: ### Run configurations for test_run_hourly
+2022-06-29 14:51:20,848: experiment_name: test_run_hourly
+2022-06-29 14:51:20,848: train_basin_file: 1_basin.txt
+2022-06-29 14:51:20,848: validation_basin_file: 1_basin.txt
+2022-06-29 14:51:20,848: test_basin_file: 1_basin.txt
+2022-06-29 14:51:20,848: train_start_date: 2000-10-01 00:00:00
+2022-06-29 14:51:20,848: train_end_date: 2003-09-30 00:00:00
+2022-06-29 14:51:20,848: validation_start_date: 2004-10-01 00:00:00
+2022-06-29 14:51:20,849: validation_end_date: 2006-09-30 00:00:00
+2022-06-29 14:51:20,849: test_start_date: 1989-10-01 00:00:00
+2022-06-29 14:51:20,849: test_end_date: 1999-09-30 00:00:00
+2022-06-29 14:51:20,849: device: cpu
+2022-06-29 14:51:20,849: validate_every: 1
+2022-06-29 14:51:20,849: validate_n_random_basins: 1
+2022-06-29 14:51:20,849: metrics: ['NSE']
+2022-06-29 14:51:20,849: model: cudalstm
+2022-06-29 14:51:20,849: head: regression
+2022-06-29 14:51:20,849: output_activation: linear
+2022-06-29 14:51:20,849: hidden_size: 20
+2022-06-29 14:51:20,849: initial_forget_bias: 3
+2022-06-29 14:51:20,849: output_dropout: 0.4
+2022-06-29 14:51:20,849: optimizer: Adam
+2022-06-29 14:51:20,849: loss: MSE
+2022-06-29 14:51:20,849: learning_rate: {0: 0.01, 30: 0.005, 40: 0.001}
+2022-06-29 14:51:20,849: batch_size: 256
+2022-06-29 14:51:20,849: epochs: 3
+2022-06-29 14:51:20,849: clip_gradient_norm: 1
+2022-06-29 14:51:20,849: predict_last_n: 1
+2022-06-29 14:51:20,849: seq_length: 336
+2022-06-29 14:51:20,849: num_workers: 8
+2022-06-29 14:51:20,849: log_interval: 5
+2022-06-29 14:51:20,849: log_tensorboard: True
+2022-06-29 14:51:20,849: log_n_figures: 1
+2022-06-29 14:51:20,850: save_weights_every: 1
+2022-06-29 14:51:20,850: dataset: hourly_camels_us
+2022-06-29 14:51:20,850: data_dir: /home/ottersloth/data/camels_hourly
+2022-06-29 14:51:20,850: forcings: ['nldas_hourly']
+2022-06-29 14:51:20,850: dynamic_inputs: ['total_precipitation', 'temperature']
+2022-06-29 14:51:20,850: target_variables: ['QObs_CAMELS(mm/h)']
+2022-06-29 14:51:20,850: clip_targets_to_zero: ['QObs_CAMELS(mm/h)']
+2022-06-29 14:51:20,850: number_of_basins: 3
+2022-06-29 14:51:20,850: run_dir: /home/ottersloth/neuralhydrology/run_hourly/runs/test_run_hourly_2906_145120
+2022-06-29 14:51:20,850: train_dir: /home/ottersloth/neuralhydrology/run_hourly/runs/test_run_hourly_2906_145120/train_data
+2022-06-29 14:51:20,850: img_log_dir: /home/ottersloth/neuralhydrology/run_hourly/runs/test_run_hourly_2906_145120/img_log
+2022-06-29 14:51:20,851: ### Device cpu will be used for training
+2022-06-29 14:51:20,853: Loading basin data into xarray data set.
+2022-06-29 14:51:20,854: ## Warning: Hourly nldas_hourly NetCDF file not found. Falling back to slower csv files.
+2022-06-29 14:51:24,790: Create lookup table and convert to pytorch tensor
+2022-06-29 14:53:17,254: Epoch 1 average loss: 0.39091227612421886
+2022-06-29 14:53:17,259: ## Warning: Hourly nldas_hourly NetCDF file not found. Falling back to slower csv files.
+2022-06-29 14:53:27,490: Epoch 1 average validation loss: 1.68662 -- Median validation metrics: NSE: 0.23566
+2022-06-29 14:55:15,941: Epoch 2 average loss: 0.3216946751798515
+2022-06-29 14:55:15,946: ## Warning: Hourly nldas_hourly NetCDF file not found. Falling back to slower csv files.
+2022-06-29 14:55:25,040: Epoch 2 average validation loss: 0.14758 -- Median validation metrics: NSE: 0.00743
+2022-06-29 14:57:06,339: Epoch 3 average loss: 0.28503676665971034
+2022-06-29 14:57:14,002: Epoch 3 average validation loss: 1.45644 -- Median validation metrics: NSE: 0.33989

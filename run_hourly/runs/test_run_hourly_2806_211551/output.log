@@ -1,0 +1,63 @@
+2022-06-28 21:15:51,153: Logging to /home/ottersloth/neuralhydrology/run_hourly/runs/test_run_hourly_2806_211551/output.log initialized.
+2022-06-28 21:15:51,153: ### Folder structure created at /home/ottersloth/neuralhydrology/run_hourly/runs/test_run_hourly_2806_211551
+2022-06-28 21:15:51,153: ### Run configurations for test_run_hourly
+2022-06-28 21:15:51,153: experiment_name: test_run_hourly
+2022-06-28 21:15:51,153: train_basin_file: 1_basin.txt
+2022-06-28 21:15:51,153: validation_basin_file: 1_basin.txt
+2022-06-28 21:15:51,153: test_basin_file: 1_basin.txt
+2022-06-28 21:15:51,153: train_start_date: 2000-10-01 00:00:00
+2022-06-28 21:15:51,153: train_end_date: 2003-09-30 00:00:00
+2022-06-28 21:15:51,153: validation_start_date: 1987-10-01 00:00:00
+2022-06-28 21:15:51,153: validation_end_date: 1989-09-30 00:00:00
+2022-06-28 21:15:51,153: test_start_date: 1989-10-01 00:00:00
+2022-06-28 21:15:51,153: test_end_date: 1999-09-30 00:00:00
+2022-06-28 21:15:51,153: device: cpu
+2022-06-28 21:15:51,154: validate_every: 1
+2022-06-28 21:15:51,154: validate_n_random_basins: 1
+2022-06-28 21:15:51,154: metrics: ['NSE']
+2022-06-28 21:15:51,154: model: cudalstm
+2022-06-28 21:15:51,154: head: regression
+2022-06-28 21:15:51,154: output_activation: linear
+2022-06-28 21:15:51,154: hidden_size: 20
+2022-06-28 21:15:51,154: initial_forget_bias: 3
+2022-06-28 21:15:51,154: output_dropout: 0.4
+2022-06-28 21:15:51,154: optimizer: Adam
+2022-06-28 21:15:51,154: loss: MSE
+2022-06-28 21:15:51,154: learning_rate: {0: 0.01, 30: 0.005, 40: 0.001}
+2022-06-28 21:15:51,154: batch_size: 256
+2022-06-28 21:15:51,154: epochs: 5
+2022-06-28 21:15:51,154: clip_gradient_norm: 1
+2022-06-28 21:15:51,154: predict_last_n: 1
+2022-06-28 21:15:51,154: seq_length: 336
+2022-06-28 21:15:51,154: num_workers: 8
+2022-06-28 21:15:51,154: log_interval: 5
+2022-06-28 21:15:51,154: log_tensorboard: True
+2022-06-28 21:15:51,154: log_n_figures: 1
+2022-06-28 21:15:51,154: save_weights_every: 1
+2022-06-28 21:15:51,154: dataset: hourly_camels_us
+2022-06-28 21:15:51,154: data_dir: /home/ottersloth/data/camels_hourly
+2022-06-28 21:15:51,155: forcings: ['nldas_hourly']
+2022-06-28 21:15:51,155: dynamic_inputs: ['total_precipitation', 'temperature']
+2022-06-28 21:15:51,155: target_variables: ['QObs_CAMELS(mm/h)']
+2022-06-28 21:15:51,155: clip_targets_to_zero: ['QObs_CAMELS(mm/h)']
+2022-06-28 21:15:51,155: number_of_basins: 3
+2022-06-28 21:15:51,155: run_dir: /home/ottersloth/neuralhydrology/run_hourly/runs/test_run_hourly_2806_211551
+2022-06-28 21:15:51,155: train_dir: /home/ottersloth/neuralhydrology/run_hourly/runs/test_run_hourly_2806_211551/train_data
+2022-06-28 21:15:51,155: img_log_dir: /home/ottersloth/neuralhydrology/run_hourly/runs/test_run_hourly_2806_211551/img_log
+2022-06-28 21:15:51,156: ### Device cpu will be used for training
+2022-06-28 21:15:51,158: Loading basin data into xarray data set.
+2022-06-28 21:15:51,161: ## Warning: Hourly nldas_hourly NetCDF file not found. Falling back to slower csv files.
+2022-06-28 21:15:55,013: Create lookup table and convert to pytorch tensor
+2022-06-28 21:17:35,624: Epoch 1 average loss: 0.36017978747750257
+2022-06-28 21:17:35,629: ## Warning: Hourly nldas_hourly NetCDF file not found. Falling back to slower csv files.
+2022-06-28 21:17:45,146: Epoch 1 average validation loss: 0.37623 -- Median validation metrics: NSE: 0.44833
+2022-06-28 21:19:22,646: Epoch 2 average loss: 0.2744161045880287
+2022-06-28 21:19:22,651: ## Warning: Hourly nldas_hourly NetCDF file not found. Falling back to slower csv files.
+2022-06-28 21:19:34,037: Epoch 2 average validation loss: nan -- Median validation metrics: 
+2022-06-28 21:21:07,939: Epoch 3 average loss: 0.23374462200256138
+2022-06-28 21:21:18,161: Epoch 3 average validation loss: nan -- Median validation metrics: 
+2022-06-28 21:22:49,996: Epoch 4 average loss: 0.18752278965692243
+2022-06-28 21:22:50,004: ## Warning: Hourly nldas_hourly NetCDF file not found. Falling back to slower csv files.
+2022-06-28 21:23:02,195: Epoch 4 average validation loss: nan -- Median validation metrics: 
+2022-06-28 21:26:00,340: Epoch 5 average loss: 0.16552038923776768
+2022-06-28 21:26:18,797: Epoch 5 average validation loss: nan -- Median validation metrics: 

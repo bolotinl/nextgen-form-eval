@@ -1,0 +1,14 @@
+2022-06-29 13:01:14,790: Logging to runs/output.log initialized.
+2022-06-29 13:01:14,790: Uncaught exception
+Traceback (most recent call last):
+  File "/home/ottersloth/anaconda3/bin/nh-run", line 33, in <module>
+    sys.exit(load_entry_point('neuralhydrology', 'console_scripts', 'nh-run')())
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/nh_run.py", line 51, in _main
+    eval_run(run_dir=Path(args["run_dir"]), period=args["period"], epoch=args["epoch"], gpu=args["gpu"])
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/nh_run.py", line 161, in eval_run
+    config = Config(run_dir / "config.yml")
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/utils/config.py", line 42, in __init__
+    self._cfg = Config._read_and_parse_config(yml_path=yml_path_or_dict)
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/utils/config.py", line 220, in _read_and_parse_config
+    raise FileNotFoundError(yml_path)
+FileNotFoundError: runs/config.yml

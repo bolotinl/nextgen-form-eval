@@ -1,0 +1,61 @@
+2022-06-28 22:14:26,896: Logging to /home/ottersloth/neuralhydrology/run_hourly/runs/test_run_hourly_2806_221426/output.log initialized.
+2022-06-28 22:14:26,897: ### Folder structure created at /home/ottersloth/neuralhydrology/run_hourly/runs/test_run_hourly_2806_221426
+2022-06-28 22:14:26,897: ### Run configurations for test_run_hourly
+2022-06-28 22:14:26,897: experiment_name: test_run_hourly
+2022-06-28 22:14:26,897: train_basin_file: 1_basin.txt
+2022-06-28 22:14:26,897: validation_basin_file: 1_basin.txt
+2022-06-28 22:14:26,897: test_basin_file: 1_basin.txt
+2022-06-28 22:14:26,897: train_start_date: 2000-10-01 00:00:00
+2022-06-28 22:14:26,897: train_end_date: 2003-09-30 00:00:00
+2022-06-28 22:14:26,897: validation_start_date: 1987-10-01 00:00:00
+2022-06-28 22:14:26,897: validation_end_date: 1989-09-30 00:00:00
+2022-06-28 22:14:26,897: test_start_date: 1989-10-01 00:00:00
+2022-06-28 22:14:26,897: test_end_date: 1999-09-30 00:00:00
+2022-06-28 22:14:26,897: device: cpu
+2022-06-28 22:14:26,897: validate_every: 1
+2022-06-28 22:14:26,897: validate_n_random_basins: 1
+2022-06-28 22:14:26,897: metrics: ['NSE']
+2022-06-28 22:14:26,897: model: cudalstm
+2022-06-28 22:14:26,897: head: regression
+2022-06-28 22:14:26,897: output_activation: linear
+2022-06-28 22:14:26,897: hidden_size: 20
+2022-06-28 22:14:26,898: initial_forget_bias: 3
+2022-06-28 22:14:26,898: output_dropout: 0.4
+2022-06-28 22:14:26,898: optimizer: Adam
+2022-06-28 22:14:26,898: loss: MSE
+2022-06-28 22:14:26,898: learning_rate: {0: 0.01, 30: 0.005, 40: 0.001}
+2022-06-28 22:14:26,898: batch_size: 256
+2022-06-28 22:14:26,898: epochs: 5
+2022-06-28 22:14:26,898: clip_gradient_norm: 1
+2022-06-28 22:14:26,898: predict_last_n: 1
+2022-06-28 22:14:26,898: seq_length: 336
+2022-06-28 22:14:26,898: num_workers: 8
+2022-06-28 22:14:26,898: log_interval: 5
+2022-06-28 22:14:26,898: log_tensorboard: True
+2022-06-28 22:14:26,898: log_n_figures: 1
+2022-06-28 22:14:26,898: save_weights_every: 1
+2022-06-28 22:14:26,898: dataset: hourly_camels_us
+2022-06-28 22:14:26,898: data_dir: /home/ottersloth/data/camels_hourly
+2022-06-28 22:14:26,898: forcings: ['nldas_hourly']
+2022-06-28 22:14:26,898: dynamic_inputs: ['total_precipitation', 'temperature']
+2022-06-28 22:14:26,898: target_variables: ['QObs_CAMELS(mm/h)']
+2022-06-28 22:14:26,898: clip_targets_to_zero: ['QObs_CAMELS(mm/h)']
+2022-06-28 22:14:26,898: number_of_basins: 1
+2022-06-28 22:14:26,898: run_dir: /home/ottersloth/neuralhydrology/run_hourly/runs/test_run_hourly_2806_221426
+2022-06-28 22:14:26,898: train_dir: /home/ottersloth/neuralhydrology/run_hourly/runs/test_run_hourly_2806_221426/train_data
+2022-06-28 22:14:26,898: img_log_dir: /home/ottersloth/neuralhydrology/run_hourly/runs/test_run_hourly_2806_221426/img_log
+2022-06-28 22:14:26,899: ### Device cpu will be used for training
+2022-06-28 22:14:26,901: Loading basin data into xarray data set.
+2022-06-28 22:14:26,903: ## Warning: Hourly nldas_hourly NetCDF file not found. Falling back to slower csv files.
+2022-06-28 22:14:28,257: Create lookup table and convert to pytorch tensor
+2022-06-28 22:15:02,167: Epoch 1 average loss: 0.39453987502357335
+2022-06-28 22:15:02,173: ## Warning: Hourly nldas_hourly NetCDF file not found. Falling back to slower csv files.
+2022-06-28 22:15:11,697: Epoch 1 average validation loss: 0.49674 -- Median validation metrics: NSE: 0.39460
+2022-06-28 22:15:43,600: Epoch 2 average loss: 0.31996937320359703
+2022-06-28 22:15:51,271: Epoch 2 average validation loss: 0.45963 -- Median validation metrics: NSE: 0.43953
+2022-06-28 22:16:23,160: Epoch 3 average loss: 0.27323986387368543
+2022-06-28 22:16:30,812: Epoch 3 average validation loss: 0.41849 -- Median validation metrics: NSE: 0.48975
+2022-06-28 22:17:01,835: Epoch 4 average loss: 0.2551710503627953
+2022-06-28 22:17:09,422: Epoch 4 average validation loss: 0.42950 -- Median validation metrics: NSE: 0.47640
+2022-06-28 22:17:40,464: Epoch 5 average loss: 0.2248256987738378
+2022-06-28 22:17:48,637: Epoch 5 average validation loss: 0.44813 -- Median validation metrics: NSE: 0.45358

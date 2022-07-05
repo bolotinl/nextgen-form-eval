@@ -1,0 +1,72 @@
+2022-06-28 18:11:32,858: Logging to /home/ottersloth/neuralhydrology/run_hourly/runs/test_run_hourly_2806_181132/output.log initialized.
+2022-06-28 18:11:32,858: ### Folder structure created at /home/ottersloth/neuralhydrology/run_hourly/runs/test_run_hourly_2806_181132
+2022-06-28 18:11:32,858: ### Run configurations for test_run_hourly
+2022-06-28 18:11:32,858: experiment_name: test_run_hourly
+2022-06-28 18:11:32,858: train_basin_file: 1_basin.txt
+2022-06-28 18:11:32,858: validation_basin_file: 1_basin.txt
+2022-06-28 18:11:32,858: test_basin_file: 1_basin.txt
+2022-06-28 18:11:32,858: train_start_date: 2000-10-01 00:00:00
+2022-06-28 18:11:32,858: train_end_date: 2003-09-30 00:00:00
+2022-06-28 18:11:32,858: validation_start_date: 1987-10-01 00:00:00
+2022-06-28 18:11:32,858: validation_end_date: 1989-09-30 00:00:00
+2022-06-28 18:11:32,858: test_start_date: 1989-10-01 00:00:00
+2022-06-28 18:11:32,858: test_end_date: 1999-09-30 00:00:00
+2022-06-28 18:11:32,858: device: cpu
+2022-06-28 18:11:32,858: validate_every: 1
+2022-06-28 18:11:32,858: validate_n_random_basins: 1
+2022-06-28 18:11:32,859: metrics: ['NSE']
+2022-06-28 18:11:32,859: model: cudalstm
+2022-06-28 18:11:32,859: head: regression
+2022-06-28 18:11:32,859: output_activation: linear
+2022-06-28 18:11:32,859: hidden_size: 20
+2022-06-28 18:11:32,859: initial_forget_bias: 3
+2022-06-28 18:11:32,859: output_dropout: 0.4
+2022-06-28 18:11:32,859: optimizer: Adam
+2022-06-28 18:11:32,859: loss: MSE
+2022-06-28 18:11:32,859: learning_rate: {0: 0.01, 30: 0.005, 40: 0.001}
+2022-06-28 18:11:32,859: batch_size: 256
+2022-06-28 18:11:32,859: epochs: 5
+2022-06-28 18:11:32,859: clip_gradient_norm: 1
+2022-06-28 18:11:32,859: predict_last_n: 1
+2022-06-28 18:11:32,859: seq_length: 336
+2022-06-28 18:11:32,859: num_workers: 8
+2022-06-28 18:11:32,859: log_interval: 5
+2022-06-28 18:11:32,859: log_tensorboard: True
+2022-06-28 18:11:32,859: log_n_figures: 1
+2022-06-28 18:11:32,859: save_weights_every: 1
+2022-06-28 18:11:32,859: dataset: hourly_camels_us
+2022-06-28 18:11:32,859: data_dir: /home/ottersloth/data/camels_hourly
+2022-06-28 18:11:32,859: forcings: ['nldas_hourly']
+2022-06-28 18:11:32,859: dynamic_inputs: ['total_precipitation', 'temperature']
+2022-06-28 18:11:32,859: target_variables: ['QObs_CAMELS(mm/h)']
+2022-06-28 18:11:32,859: clip_targets_to_zero: ['QObs_CAMELS(mm/h)']
+2022-06-28 18:11:32,859: number_of_basins: 1
+2022-06-28 18:11:32,860: run_dir: /home/ottersloth/neuralhydrology/run_hourly/runs/test_run_hourly_2806_181132
+2022-06-28 18:11:32,860: train_dir: /home/ottersloth/neuralhydrology/run_hourly/runs/test_run_hourly_2806_181132/train_data
+2022-06-28 18:11:32,860: img_log_dir: /home/ottersloth/neuralhydrology/run_hourly/runs/test_run_hourly_2806_181132/img_log
+2022-06-28 18:11:32,860: ### Device cpu will be used for training
+2022-06-28 18:11:32,863: Loading basin data into xarray data set.
+2022-06-28 18:11:32,865: ## Warning: Hourly nldas_hourly NetCDF file not found. Falling back to slower csv files.
+2022-06-28 18:11:34,239: Create lookup table and convert to pytorch tensor
+2022-06-28 18:12:08,962: Epoch 1 average loss: 0.3095141955949728
+2022-06-28 18:12:08,968: ## Warning: Hourly nldas_hourly NetCDF file not found. Falling back to slower csv files.
+2022-06-28 18:12:21,033: Epoch 1 average validation loss: nan -- Median validation metrics: 
+2022-06-28 18:12:31,120: Uncaught exception
+Traceback (most recent call last):
+  File "/home/ottersloth/anaconda3/bin/nh-run", line 33, in <module>
+    sys.exit(load_entry_point('neuralhydrology', 'console_scripts', 'nh-run')())
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/nh_run.py", line 43, in _main
+    start_run(config_file=Path(args["config_file"]), gpu=args["gpu"])
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/nh_run.py", line 76, in start_run
+    start_training(config)
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/training/train.py", line 23, in start_training
+    trainer.train_and_validate()
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/training/basetrainer.py", line 205, in train_and_validate
+    self._train_epoch(epoch=epoch)
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/training/basetrainer.py", line 304, in _train_epoch
+    loss.backward()
+  File "/home/ottersloth/anaconda3/lib/python3.9/site-packages/torch/_tensor.py", line 363, in backward
+    torch.autograd.backward(self, gradient, retain_graph, create_graph, inputs=inputs)
+  File "/home/ottersloth/anaconda3/lib/python3.9/site-packages/torch/autograd/__init__.py", line 173, in backward
+    Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+KeyboardInterrupt

@@ -1,0 +1,34 @@
+xarray_feature_scale:
+  coords: {}
+  attrs: {}
+  dims: {}
+  data_vars:
+    QObs_CAMELS(mm/h):
+      dims: []
+      attrs: {}
+      data: 0.080842524766922
+    temperature:
+      dims: []
+      attrs: {}
+      data: 10.545024871826172
+    total_precipitation:
+      dims: []
+      attrs: {}
+      data: 0.6314387917518616
+xarray_feature_center:
+  coords: {}
+  attrs: {}
+  dims: {}
+  data_vars:
+    QObs_CAMELS(mm/h):
+      dims: []
+      attrs: {}
+      data: 0.059936340898275375
+    temperature:
+      dims: []
+      attrs: {}
+      data: 7.056412220001221
+    total_precipitation:
+      dims: []
+      attrs: {}
+      data: 0.10282272100448608

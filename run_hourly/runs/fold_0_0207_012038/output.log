@@ -1,0 +1,83 @@
+2022-07-02 01:20:38,145: Logging to /home/ottersloth/neuralhydrology/run_hourly/runs/fold_0_0207_012038/output.log initialized.
+2022-07-02 01:20:38,145: ### Folder structure created at /home/ottersloth/neuralhydrology/run_hourly/runs/fold_0_0207_012038
+2022-07-02 01:20:38,145: ### Run configurations for fold_0
+2022-07-02 01:20:38,145: experiment_name: fold_0
+2022-07-02 01:20:38,145: train_basin_file: Basin_CV_Splits/basins_train_0.txt
+2022-07-02 01:20:38,145: validation_basin_file: 1_basin.txt
+2022-07-02 01:20:38,145: test_basin_file: Basin_CV_Splits/basins_test_0.txt
+2022-07-02 01:20:38,145: train_start_date: 1999-10-01 00:00:00
+2022-07-02 01:20:38,145: train_end_date: 2005-09-30 00:00:00
+2022-07-02 01:20:38,145: validation_start_date: 2004-10-01 00:00:00
+2022-07-02 01:20:38,145: validation_end_date: 2006-09-30 00:00:00
+2022-07-02 01:20:38,145: test_start_date: 2005-10-01 00:00:00
+2022-07-02 01:20:38,145: test_end_date: 2011-09-30 00:00:00
+2022-07-02 01:20:38,145: device: cpu
+2022-07-02 01:20:38,145: validate_every: 10000
+2022-07-02 01:20:38,145: validate_n_random_basins: 1
+2022-07-02 01:20:38,145: metrics: ['NSE']
+2022-07-02 01:20:38,145: model: cudalstm
+2022-07-02 01:20:38,145: head: regression
+2022-07-02 01:20:38,145: output_activation: linear
+2022-07-02 01:20:38,145: hidden_size: 256
+2022-07-02 01:20:38,145: initial_forget_bias: 3
+2022-07-02 01:20:38,145: output_dropout: 0.4
+2022-07-02 01:20:38,146: optimizer: Adam
+2022-07-02 01:20:38,146: loss: NSE
+2022-07-02 01:20:38,146: learning_rate: {0: 4e-05}
+2022-07-02 01:20:38,146: batch_size: 256
+2022-07-02 01:20:38,146: epochs: 5
+2022-07-02 01:20:38,146: clip_gradient_norm: 1
+2022-07-02 01:20:38,146: predict_last_n: 1
+2022-07-02 01:20:38,146: seq_length: 4320
+2022-07-02 01:20:38,146: num_workers: 8
+2022-07-02 01:20:38,146: log_interval: 5
+2022-07-02 01:20:38,146: log_tensorboard: True
+2022-07-02 01:20:38,146: log_n_figures: 1
+2022-07-02 01:20:38,146: save_weights_every: 1
+2022-07-02 01:20:38,146: dataset: hourly_camels_us
+2022-07-02 01:20:38,146: data_dir: /home/ottersloth/data/camels_hourly
+2022-07-02 01:20:38,146: forcings: ['nldas_hourly']
+2022-07-02 01:20:38,146: dynamic_inputs: ['total_precipitation', 'longwave_radiation', 'shortwave_radiation', 'pressure', 'specific_humidity', 'temperature', 'wind_u', 'wind_v']
+2022-07-02 01:20:38,146: static_attributes: ['elev_mean', 'slope_mean', 'area_gages2', 'frac_forest', 'lai_max', 'lai_diff', 'gvf_max', 'gvf_diff', 'soil_depth_pelletier', 'soil_depth_statsgo', 'soil_porosity', 'soil_conductivity', 'max_water_content', 'sand_frac', 'silt_frac', 'clay_frac', 'carbonate_rocks_frac', 'geol_permeability', 'p_mean', 'pet_mean', 'aridity', 'frac_snow', 'high_prec_freq', 'high_prec_dur', 'low_prec_freq', 'low_prec_dur']
+2022-07-02 01:20:38,146: target_variables: ['QObs_CAMELS(mm/h)']
+2022-07-02 01:20:38,146: clip_targets_to_zero: ['QObs_CAMELS(mm/h)']
+2022-07-02 01:20:38,146: number_of_basins: 477
+2022-07-02 01:20:38,146: run_dir: /home/ottersloth/neuralhydrology/run_hourly/runs/fold_0_0207_012038
+2022-07-02 01:20:38,146: train_dir: /home/ottersloth/neuralhydrology/run_hourly/runs/fold_0_0207_012038/train_data
+2022-07-02 01:20:38,146: img_log_dir: /home/ottersloth/neuralhydrology/run_hourly/runs/fold_0_0207_012038/img_log
+2022-07-02 01:20:38,150: ### Device cpu will be used for training
+2022-07-02 01:20:38,251: Loading basin data into xarray data set.
+2022-07-02 01:20:38,253: ## Warning: Hourly nldas_hourly NetCDF file not found. Falling back to slower csv files.
+2022-07-02 01:22:42,186: Uncaught exception
+Traceback (most recent call last):
+  File "/home/ottersloth/anaconda3/envs/neuralhydrology_cpu/bin/nh-run", line 33, in <module>
+    sys.exit(load_entry_point('neuralhydrology', 'console_scripts', 'nh-run')())
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/nh_run.py", line 43, in _main
+    start_run(config_file=Path(args["config_file"]), gpu=args["gpu"])
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/nh_run.py", line 76, in start_run
+    start_training(config)
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/training/train.py", line 22, in start_training
+    trainer.initialize_training()
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/training/basetrainer.py", line 162, in initialize_training
+    ds = self._get_dataset()
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/training/basetrainer.py", line 79, in _get_dataset
+    return get_dataset(cfg=self.cfg, period="train", is_train=True, scaler=self._scaler)
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/datasetzoo/__init__.py", line 86, in get_dataset
+    scaler=scaler)
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/datasetzoo/hourlycamelsus.py", line 63, in __init__
+    scaler=scaler)
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/datasetzoo/camelsus.py", line 66, in __init__
+    scaler=scaler)
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/datasetzoo/basedataset.py", line 129, in __init__
+    self._load_data()
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/datasetzoo/basedataset.py", line 597, in _load_data
+    xr = self._load_or_create_xarray_dataset()
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/datasetzoo/basedataset.py", line 292, in _load_or_create_xarray_dataset
+    df = self._load_basin_data(basin)
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/datasetzoo/hourlycamelsus.py", line 73, in _load_basin_data
+    df = self.load_hourly_data(basin, forcing)
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/datasetzoo/hourlycamelsus.py", line 158, in load_hourly_data
+    df = df.join(load_hourly_us_discharge(self.cfg.data_dir, basin))
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/datasetzoo/hourlycamelsus.py", line 229, in load_hourly_us_discharge
+    raise FileNotFoundError(f'No file for Basin {basin} at {discharge_path}')
+FileNotFoundError: No file for Basin 02112120 at /home/ottersloth/data/camels_hourly/usgs_streamflow
