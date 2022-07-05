@@ -1,0 +1,109 @@
+# Off LIMITS RUN OPTIONS #
+#make_and_run_bmi_pass_forcings.sh
+#./src/main_pass_forcings.c
+
+# RUN EXECUTABLES #
+###################
+run_cfe
+run_cfe_bmi
+run_cfe_bmi_pass_forcings
+run_cfe_aorc_et_bmi
+./original_author_code/run_cfe
+./test/run_cfe_bmi_test
+
+# TRASH BUCKETS #
+#################
+./original_author_code/z_trash/
+./original_author_code/z_old/
+./original_author_code/z_trash/*
+./original_author_code/z_old/*
+
+# MODEL OUTPUT FILES #
+######################
+*.out
+original_author_code/test.out
+original_author_code/test*.out
+original_author_code/debug.out
+
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+_site/
+
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+
+# Vim swap files #
+##################
+*.swp
+
+# Python #
+#################
+*.pyc
+*.egg-info/
+__pycache__/
+*.py[cod]
+.env
+.python-version
+
+# pyenv #
+#########
+.python-version
+
+# Django #
+#################
+*.egg-info
+.installed.cfg
+
+# Unit test / coverage reports
+#################
+htmlcov/
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+
+# Output from GIUH - python functions #
+###################################
+*.png
+*.csv
+
+# Front-End #
+#############
+node_modules/
+bower_components/
+.grunt/
+src/vendor/
+dist/
