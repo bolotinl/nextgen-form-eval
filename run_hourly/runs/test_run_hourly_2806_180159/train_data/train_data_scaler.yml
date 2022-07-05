@@ -1,0 +1,34 @@
+xarray_feature_scale:
+  coords: {}
+  attrs: {}
+  dims: {}
+  data_vars:
+    QObs(mm/h):
+      dims: []
+      attrs: {}
+      data: 0.09058567136526108
+    temperature:
+      dims: []
+      attrs: {}
+      data: 10.545024871826172
+    total_precipitation:
+      dims: []
+      attrs: {}
+      data: 0.6314387917518616
+xarray_feature_center:
+  coords: {}
+  attrs: {}
+  dims: {}
+  data_vars:
+    QObs(mm/h):
+      dims: []
+      attrs: {}
+      data: 0.06680382788181305
+    temperature:
+      dims: []
+      attrs: {}
+      data: 7.056412220001221
+    total_precipitation:
+      dims: []
+      attrs: {}
+      data: 0.10282272100448608

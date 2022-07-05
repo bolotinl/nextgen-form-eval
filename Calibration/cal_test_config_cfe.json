@@ -1,6 +1,6 @@
 {
     "forcing_file":"/Users/Sophie/Desktop/CUAHSI/CFE_Calibration/01022500_hourly_nldas.csv",
-    "catchment_area_km2":15.617167355002097,
+    "catchment_area_km2":573.6,
     "alpha_fc":0.33,
     "soil_params":{
                    "depth":2.0,
@@ -21,7 +21,7 @@
     "K_lf":0.01,
     "K_nash":0.03,
     "nash_storage":[0.0,0.0],
-    "giuh_ordinates":[0.1,0.35,0.2,0.14,0.1,0.06,0.05],
+    "giuh_ordinates":[0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1],
     "stand_alone":1,
     "unit_test":0,
     "compare_results_file":"test_compare.csv"

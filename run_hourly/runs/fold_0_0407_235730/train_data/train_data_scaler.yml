@@ -1,0 +1,136 @@
+attribute_means:
+  area_gages2: 489.2920258620694
+  aridity: 0.9692006644212418
+  carbonate_rocks_frac: 0.1309015165814738
+  clay_frac: 20.24007265445191
+  elev_mean: 723.6501293103441
+  frac_forest: 0.6661581896551729
+  frac_snow: 0.17181008650996696
+  geol_permeability: -13.93514827586207
+  gvf_diff: 0.332844741316136
+  gvf_max: 0.7419742499150197
+  high_prec_dur: 1.335596737029142
+  high_prec_freq: 20.684051724137927
+  lai_diff: 2.5702072152702855
+  lai_max: 3.356365132878322
+  low_prec_dur: 5.589027098403805
+  low_prec_freq: 251.16778017241393
+  max_water_content: 0.52668333293481
+  p_mean: 3.4221320481956132
+  pet_mean: 2.7647360536749903
+  sand_frac: 35.92872897531781
+  silt_frac: 34.80432058303856
+  slope_mean: 46.52591478448274
+  soil_conductivity: 1.660527450571403
+  soil_depth_pelletier: 10.050595686060621
+  soil_depth_statsgo: 1.2882014649783196
+  soil_porosity: 0.44262184172904917
+attribute_stds:
+  area_gages2: 481.7719807260835
+  aridity: 0.5155029104937328
+  carbonate_rocks_frac: 0.275174374581797
+  clay_frac: 9.236603059111951
+  elev_mean: 784.4696550075273
+  frac_forest: 0.3624742015661736
+  frac_snow: 0.197605553688842
+  geol_permeability: 1.174495964608883
+  gvf_diff: 0.14806861294070325
+  gvf_max: 0.15460096563940537
+  high_prec_dur: 0.18802773098294878
+  high_prec_freq: 4.499551689393754
+  lai_diff: 1.3206459190602187
+  lai_max: 1.4788768859675636
+  low_prec_dur: 2.5534768600446087
+  low_prec_freq: 34.26083741181635
+  max_water_content: 0.1410702072883803
+  p_mean: 1.394040235492152
+  pet_mean: 0.5487860026859593
+  sand_frac: 15.755002386989378
+  silt_frac: 13.318608125572677
+  slope_mean: 47.16331486710184
+  soil_conductivity: 1.3586535348559658
+  soil_depth_pelletier: 15.863455870319452
+  soil_depth_statsgo: 0.261236586709315
+  soil_porosity: 0.021347569696253954
+xarray_feature_scale:
+  coords: {}
+  attrs: {}
+  dims: {}
+  data_vars:
+    QObs_CAMELS(mm/h):
+      dims: []
+      attrs: {}
+      data: 0.15698973834514618
+    longwave_radiation:
+      dims: []
+      attrs: {}
+      data: 70.571044921875
+    pressure:
+      dims: []
+      attrs: {}
+      data: 9530.9462890625
+    shortwave_radiation:
+      dims: []
+      attrs: {}
+      data: 256.1263122558594
+    specific_humidity:
+      dims: []
+      attrs: {}
+      data: 0.0044747269712388515
+    temperature:
+      dims: []
+      attrs: {}
+      data: 11.022188186645508
+    total_precipitation:
+      dims: []
+      attrs: {}
+      data: 0.6559933423995972
+    wind_u:
+      dims: []
+      attrs: {}
+      data: 3.0882649421691895
+    wind_v:
+      dims: []
+      attrs: {}
+      data: 3.4118258953094482
+xarray_feature_center:
+  coords: {}
+  attrs: {}
+  dims: {}
+  data_vars:
+    QObs_CAMELS(mm/h):
+      dims: []
+      attrs: {}
+      data: 0.07024036347866058
+    longwave_radiation:
+      dims: []
+      attrs: {}
+      data: 307.2074890136719
+    pressure:
+      dims: []
+      attrs: {}
+      data: 93425.6171875
+    shortwave_radiation:
+      dims: []
+      attrs: {}
+      data: 193.6686553955078
+    specific_humidity:
+      dims: []
+      attrs: {}
+      data: 0.00724305072799325
+    temperature:
+      dims: []
+      attrs: {}
+      data: 11.885639190673828
+    total_precipitation:
+      dims: []
+      attrs: {}
+      data: 0.13167132437229156
+    wind_u:
+      dims: []
+      attrs: {}
+      data: 1.1394702196121216
+    wind_v:
+      dims: []
+      attrs: {}
+      data: 0.5750110149383545

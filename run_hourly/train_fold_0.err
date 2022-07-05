@@ -1,0 +1,5 @@
+/home/ottersloth/neuralhydrology/neuralhydrology/datasetzoo/hourlycamelsus.py:158: DtypeWarning: Columns (3) have mixed types.Specify dtype option on import or set low_memory=False.
+  df = df.join(load_hourly_us_discharge(self.cfg.data_dir, basin))
+/home/ottersloth/neuralhydrology/neuralhydrology/datasetzoo/basedataset.py:421: UserWarning: Creating a tensor from a list of numpy.ndarrays is extremely slow. Please consider converting the list to a single numpy.ndarray with numpy.array() before converting to a tensor. (Triggered internally at  /opt/conda/conda-bld/pytorch_1646755885937/work/torch/csrc/utils/tensor_new.cpp:210.)
+  per_basin_target_stds = torch.tensor([np.nanstd(obs, axis=1)], dtype=torch.float32)
+slurmstepd: error: *** JOB 21363 ON node03 CANCELLED AT 2022-07-02T11:47:33 ***

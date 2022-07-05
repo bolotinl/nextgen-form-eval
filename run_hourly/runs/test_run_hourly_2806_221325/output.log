@@ -1,0 +1,73 @@
+2022-06-28 22:13:25,110: Logging to /home/ottersloth/neuralhydrology/run_hourly/runs/test_run_hourly_2806_221325/output.log initialized.
+2022-06-28 22:13:25,110: ### Folder structure created at /home/ottersloth/neuralhydrology/run_hourly/runs/test_run_hourly_2806_221325
+2022-06-28 22:13:25,110: ### Run configurations for test_run_hourly
+2022-06-28 22:13:25,111: experiment_name: test_run_hourly
+2022-06-28 22:13:25,111: train_basin_file: 1_basin.txt
+2022-06-28 22:13:25,111: validation_basin_file: 1_basin.txt
+2022-06-28 22:13:25,111: test_basin_file: 1_basin.txt
+2022-06-28 22:13:25,111: train_start_date: 2000-10-01 00:00:00
+2022-06-28 22:13:25,111: train_end_date: 2003-09-30 00:00:00
+2022-06-28 22:13:25,111: validation_start_date: 1987-10-01 00:00:00
+2022-06-28 22:13:25,111: validation_end_date: 1989-09-30 00:00:00
+2022-06-28 22:13:25,111: test_start_date: 1989-10-01 00:00:00
+2022-06-28 22:13:25,111: test_end_date: 1999-09-30 00:00:00
+2022-06-28 22:13:25,111: device: cpu
+2022-06-28 22:13:25,111: validate_every: 1
+2022-06-28 22:13:25,111: validate_n_random_basins: 1
+2022-06-28 22:13:25,111: metrics: ['NSE']
+2022-06-28 22:13:25,111: model: cudalstm
+2022-06-28 22:13:25,111: head: regression
+2022-06-28 22:13:25,111: output_activation: linear
+2022-06-28 22:13:25,111: hidden_size: 20
+2022-06-28 22:13:25,111: initial_forget_bias: 3
+2022-06-28 22:13:25,111: output_dropout: 0.4
+2022-06-28 22:13:25,111: optimizer: Adam
+2022-06-28 22:13:25,111: loss: MSE
+2022-06-28 22:13:25,111: learning_rate: {0: 0.01, 30: 0.005, 40: 0.001}
+2022-06-28 22:13:25,112: batch_size: 256
+2022-06-28 22:13:25,112: epochs: 5
+2022-06-28 22:13:25,112: clip_gradient_norm: 1
+2022-06-28 22:13:25,112: predict_last_n: 1
+2022-06-28 22:13:25,112: seq_length: 336
+2022-06-28 22:13:25,112: num_workers: 8
+2022-06-28 22:13:25,112: log_interval: 5
+2022-06-28 22:13:25,112: log_tensorboard: True
+2022-06-28 22:13:25,112: log_n_figures: 1
+2022-06-28 22:13:25,112: save_weights_every: 1
+2022-06-28 22:13:25,112: dataset: hourly_camels_us
+2022-06-28 22:13:25,112: data_dir: /home/ottersloth/data/camels_hourly
+2022-06-28 22:13:25,112: forcings: ['nldas_hourly']
+2022-06-28 22:13:25,112: dynamic_inputs: ['total_precipitation', 'temperature']
+2022-06-28 22:13:25,112: target_variables: ['QObs_CAMELS(mm/h)']
+2022-06-28 22:13:25,112: clip_targets_to_zero: ['QObs_CAMELS(mm/h)']
+2022-06-28 22:13:25,112: number_of_basins: 1
+2022-06-28 22:13:25,112: run_dir: /home/ottersloth/neuralhydrology/run_hourly/runs/test_run_hourly_2806_221325
+2022-06-28 22:13:25,112: train_dir: /home/ottersloth/neuralhydrology/run_hourly/runs/test_run_hourly_2806_221325/train_data
+2022-06-28 22:13:25,112: img_log_dir: /home/ottersloth/neuralhydrology/run_hourly/runs/test_run_hourly_2806_221325/img_log
+2022-06-28 22:13:25,113: ### Device cpu will be used for training
+2022-06-28 22:13:25,116: Loading basin data into xarray data set.
+2022-06-28 22:13:25,118: ## Warning: Hourly nldas_hourly NetCDF file not found. Falling back to slower csv files.
+2022-06-28 22:13:26,491: Create lookup table and convert to pytorch tensor
+2022-06-28 22:13:38,815: Uncaught exception
+Traceback (most recent call last):
+  File "/home/ottersloth/anaconda3/bin/nh-run", line 33, in <module>
+    sys.exit(load_entry_point('neuralhydrology', 'console_scripts', 'nh-run')())
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/nh_run.py", line 43, in _main
+    start_run(config_file=Path(args["config_file"]), gpu=args["gpu"])
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/nh_run.py", line 76, in start_run
+    start_training(config)
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/training/train.py", line 23, in start_training
+    trainer.train_and_validate()
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/training/basetrainer.py", line 205, in train_and_validate
+    self._train_epoch(epoch=epoch)
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/training/basetrainer.py", line 281, in _train_epoch
+    predictions = self.model(data)
+  File "/home/ottersloth/anaconda3/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1110, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/modelzoo/cudalstm.py", line 68, in forward
+    lstm_output, (h_n, c_n) = self.lstm(input=x_d)
+  File "/home/ottersloth/anaconda3/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1110, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/ottersloth/anaconda3/lib/python3.9/site-packages/torch/nn/modules/rnn.py", line 761, in forward
+    result = _VF.lstm(input, hx, self._flat_weights, self.bias, self.num_layers,
+KeyboardInterrupt

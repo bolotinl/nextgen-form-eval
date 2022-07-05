@@ -1,0 +1,65 @@
+2022-07-01 19:15:07,540: Logging to /home/ottersloth/neuralhydrology/run_hourly/runs/fold_0_0107_191507/output.log initialized.
+2022-07-01 19:15:07,540: ### Folder structure created at /home/ottersloth/neuralhydrology/run_hourly/runs/fold_0_0107_191507
+2022-07-01 19:15:07,541: ### Run configurations for fold_0
+2022-07-01 19:15:07,541: experiment_name: fold_0
+2022-07-01 19:15:07,541: train_basin_file: Basin_CV_Splits/basins_train_0.txt
+2022-07-01 19:15:07,541: validation_basin_file: 1_basin.txt
+2022-07-01 19:15:07,541: test_basin_file: Basin_CV_Splits/basins_test_0.txt
+2022-07-01 19:15:07,541: train_start_date: 1999-10-01 00:00:00
+2022-07-01 19:15:07,541: train_end_date: 2005-09-30 00:00:00
+2022-07-01 19:15:07,541: validation_start_date: 2004-10-01 00:00:00
+2022-07-01 19:15:07,541: validation_end_date: 2006-09-30 00:00:00
+2022-07-01 19:15:07,541: test_start_date: 2005-10-01 00:00:00
+2022-07-01 19:15:07,541: test_end_date: 2011-09-30 00:00:00
+2022-07-01 19:15:07,541: device: cpu
+2022-07-01 19:15:07,541: validate_every: 10000
+2022-07-01 19:15:07,541: validate_n_random_basins: 1
+2022-07-01 19:15:07,541: metrics: ['NSE']
+2022-07-01 19:15:07,541: model: cudalstm
+2022-07-01 19:15:07,541: head: regression
+2022-07-01 19:15:07,541: output_activation: linear
+2022-07-01 19:15:07,541: hidden_size: 256
+2022-07-01 19:15:07,541: initial_forget_bias: 3
+2022-07-01 19:15:07,542: output_dropout: 0.4
+2022-07-01 19:15:07,542: optimizer: Adam
+2022-07-01 19:15:07,542: loss: NSE
+2022-07-01 19:15:07,542: learning_rate: {10: '1e−4'}
+2022-07-01 19:15:07,542: batch_size: 256
+2022-07-01 19:15:07,542: epochs: 50
+2022-07-01 19:15:07,542: clip_gradient_norm: 1
+2022-07-01 19:15:07,542: predict_last_n: 1
+2022-07-01 19:15:07,542: seq_length: 4320
+2022-07-01 19:15:07,542: num_workers: 8
+2022-07-01 19:15:07,542: log_interval: 5
+2022-07-01 19:15:07,542: log_tensorboard: True
+2022-07-01 19:15:07,542: log_n_figures: 1
+2022-07-01 19:15:07,542: save_weights_every: 1
+2022-07-01 19:15:07,542: dataset: hourly_camels_us
+2022-07-01 19:15:07,542: data_dir: /home/ottersloth/data/camels_hourly
+2022-07-01 19:15:07,542: forcings: ['nldas_hourly']
+2022-07-01 19:15:07,542: dynamic_inputs: ['total_precipitation', 'longwave_radiation', 'shortwave_radiation', 'pressure', 'specific_humidity', 'temperature', 'wind_u', 'wind_v']
+2022-07-01 19:15:07,542: static_attributes: ['elev_mean', 'slope_mean', 'area_gages2', 'frac_forest', 'lai_max', 'lai_diff', 'gvf_max', 'gvf_diff', 'soil_depth_pelletier', 'soil_depth_statsgo', 'soil_porosity', 'soil_conductivity', 'max_water_content', 'sand_frac', 'silt_frac', 'clay_frac', 'carbonate_rocks_frac', 'geol_permeability', 'p_mean', 'pet_mean', 'aridity', 'frac_snow', 'high_prec_freq', 'high_prec_dur', 'low_prec_freq', 'low_prec_dur']
+2022-07-01 19:15:07,542: target_variables: ['QObs_CAMELS(mm/h)']
+2022-07-01 19:15:07,542: clip_targets_to_zero: ['QObs_CAMELS(mm/h)']
+2022-07-01 19:15:07,542: number_of_basins: 477
+2022-07-01 19:15:07,542: run_dir: /home/ottersloth/neuralhydrology/run_hourly/runs/fold_0_0107_191507
+2022-07-01 19:15:07,543: train_dir: /home/ottersloth/neuralhydrology/run_hourly/runs/fold_0_0107_191507/train_data
+2022-07-01 19:15:07,543: img_log_dir: /home/ottersloth/neuralhydrology/run_hourly/runs/fold_0_0107_191507/img_log
+2022-07-01 19:15:07,543: ### Device cpu will be used for training
+2022-07-01 19:15:07,547: Uncaught exception
+Traceback (most recent call last):
+  File "/home/ottersloth/anaconda3/bin/nh-run", line 33, in <module>
+    sys.exit(load_entry_point('neuralhydrology', 'console_scripts', 'nh-run')())
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/nh_run.py", line 43, in _main
+    start_run(config_file=Path(args["config_file"]), gpu=args["gpu"])
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/nh_run.py", line 76, in start_run
+    start_training(config)
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/training/train.py", line 22, in start_training
+    trainer.initialize_training()
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/training/basetrainer.py", line 152, in initialize_training
+    self.optimizer = self._get_optimizer()
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/training/basetrainer.py", line 85, in _get_optimizer
+    return get_optimizer(model=self.model, cfg=self.cfg)
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/training/__init__.py", line 32, in get_optimizer
+    optimizer = torch.optim.Adam(model.parameters(), lr=cfg.learning_rate[0])
+KeyError: 0

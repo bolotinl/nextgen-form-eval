@@ -1,0 +1,90 @@
+2022-06-29 12:49:33,798: Logging to /home/ottersloth/neuralhydrology/run_hourly/runs/test_run_hourly_2906_124933/output.log initialized.
+2022-06-29 12:49:33,798: ### Folder structure created at /home/ottersloth/neuralhydrology/run_hourly/runs/test_run_hourly_2906_124933
+2022-06-29 12:49:33,798: ### Run configurations for test_run_hourly
+2022-06-29 12:49:33,798: experiment_name: test_run_hourly
+2022-06-29 12:49:33,798: train_basin_file: 1_basin.txt
+2022-06-29 12:49:33,798: validation_basin_file: 1_basin.txt
+2022-06-29 12:49:33,799: test_basin_file: 1_basin.txt
+2022-06-29 12:49:33,799: train_start_date: 2000-10-01 00:00:00
+2022-06-29 12:49:33,799: train_end_date: 2003-09-30 00:00:00
+2022-06-29 12:49:33,799: validation_start_date: 2004-10-01 00:00:00
+2022-06-29 12:49:33,799: validation_end_date: 2006-09-30 00:00:00
+2022-06-29 12:49:33,799: test_start_date: 1989-10-01 00:00:00
+2022-06-29 12:49:33,799: test_end_date: 1999-09-30 00:00:00
+2022-06-29 12:49:33,799: device: cpu
+2022-06-29 12:49:33,799: validate_every: 1
+2022-06-29 12:49:33,799: validate_n_random_basins: 1
+2022-06-29 12:49:33,799: metrics: ['NSE']
+2022-06-29 12:49:33,799: model: cudalstm
+2022-06-29 12:49:33,799: head: regression
+2022-06-29 12:49:33,799: output_activation: linear
+2022-06-29 12:49:33,799: hidden_size: 20
+2022-06-29 12:49:33,799: initial_forget_bias: 3
+2022-06-29 12:49:33,799: output_dropout: 0.4
+2022-06-29 12:49:33,799: optimizer: Adam
+2022-06-29 12:49:33,799: loss: MSE
+2022-06-29 12:49:33,799: learning_rate: {0: 0.01, 30: 0.005, 40: 0.001}
+2022-06-29 12:49:33,799: batch_size: 256
+2022-06-29 12:49:33,799: epochs: 3
+2022-06-29 12:49:33,799: clip_gradient_norm: 1
+2022-06-29 12:49:33,799: predict_last_n: 1
+2022-06-29 12:49:33,799: seq_length: 336
+2022-06-29 12:49:33,799: num_workers: 8
+2022-06-29 12:49:33,799: log_interval: 5
+2022-06-29 12:49:33,800: log_tensorboard: True
+2022-06-29 12:49:33,800: log_n_figures: 1
+2022-06-29 12:49:33,800: save_weights_every: 1
+2022-06-29 12:49:33,800: dataset: hourly_camels_us
+2022-06-29 12:49:33,800: data_dir: /home/ottersloth/data/camels_hourly
+2022-06-29 12:49:33,800: forcings: ['nldas_hourly']
+2022-06-29 12:49:33,800: dynamic_inputs: ['total_precipitation', 'temperature']
+2022-06-29 12:49:33,800: target_variables: ['QObs_CAMELS(mm/h)']
+2022-06-29 12:49:33,800: clip_targets_to_zero: ['QObs_CAMELS(mm/h)']
+2022-06-29 12:49:33,800: number_of_basins: 3
+2022-06-29 12:49:33,800: run_dir: /home/ottersloth/neuralhydrology/run_hourly/runs/test_run_hourly_2906_124933
+2022-06-29 12:49:33,800: train_dir: /home/ottersloth/neuralhydrology/run_hourly/runs/test_run_hourly_2906_124933/train_data
+2022-06-29 12:49:33,800: img_log_dir: /home/ottersloth/neuralhydrology/run_hourly/runs/test_run_hourly_2906_124933/img_log
+2022-06-29 12:49:33,801: ### Device cpu will be used for training
+2022-06-29 12:49:33,803: Loading basin data into xarray data set.
+2022-06-29 12:49:33,805: ## Warning: Hourly nldas_hourly NetCDF file not found. Falling back to slower csv files.
+2022-06-29 12:49:37,660: Create lookup table and convert to pytorch tensor
+2022-06-29 12:51:12,757: Epoch 1 average loss: 0.3732952380480317
+2022-06-29 12:51:12,765: ## Warning: Hourly nldas_hourly NetCDF file not found. Falling back to slower csv files.
+2022-06-29 12:51:22,306: Epoch 1 average validation loss: 0.10234 -- Median validation metrics: NSE: 0.31201
+2022-06-29 12:52:57,287: Epoch 2 average loss: 0.3007903468928167
+2022-06-29 12:53:04,976: Epoch 2 average validation loss: 0.10902 -- Median validation metrics: NSE: 0.26881
+2022-06-29 12:54:37,514: Epoch 3 average loss: 0.27778057386348776
+2022-06-29 12:54:37,521: ## Warning: Hourly nldas_hourly NetCDF file not found. Falling back to slower csv files.
+2022-06-29 12:54:46,414: Epoch 3 average validation loss: 0.10547 -- Median validation metrics: NSE: 0.34940
+2022-06-29 13:10:55,720: Logging to output.log initialized.
+2022-06-29 13:10:55,728: Uncaught exception
+Traceback (most recent call last):
+  File "/home/ottersloth/anaconda3/bin/nh-run", line 33, in <module>
+    sys.exit(load_entry_point('neuralhydrology', 'console_scripts', 'nh-run')())
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/nh_run.py", line 51, in _main
+    eval_run(run_dir=Path(args["run_dir"]), period=args["period"], epoch=args["epoch"], gpu=args["gpu"])
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/nh_run.py", line 169, in eval_run
+    start_evaluation(cfg=config, run_dir=run_dir, epoch=epoch, period=period)
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/evaluation/evaluate.py", line 22, in start_evaluation
+    tester = get_tester(cfg=cfg, run_dir=run_dir, period=period, init_model=True)
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/evaluation/__init__.py", line 35, in get_tester
+    return Tester(cfg=cfg, run_dir=run_dir, period=period, init_model=init_model)
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/evaluation/tester.py", line 481, in __init__
+    super(RegressionTester, self).__init__(cfg, run_dir, period, init_model)
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/evaluation/tester.py", line 79, in __init__
+    self._load_run_data()
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/evaluation/tester.py", line 98, in _load_run_data
+    self.basins = load_basin_file(getattr(self.cfg, f"{self.period}_basin_file"))
+  File "/home/ottersloth/neuralhydrology/neuralhydrology/datautils/utils.py", line 65, in load_basin_file
+    with basin_file.open('r') as fp:
+  File "/home/ottersloth/anaconda3/lib/python3.9/pathlib.py", line 1252, in open
+    return io.open(self, mode, buffering, encoding, errors, newline,
+  File "/home/ottersloth/anaconda3/lib/python3.9/pathlib.py", line 1120, in _opener
+    return self._accessor.open(self, flags, mode)
+FileNotFoundError: [Errno 2] No such file or directory: '1_basin.txt'
+2022-06-29 13:12:15,533: Logging to output.log initialized.
+2022-06-29 13:12:15,543: Using the model weights from model_epoch003.pt
+2022-06-29 13:12:15,546: ## Warning: Hourly nldas_hourly NetCDF file not found. Falling back to slower csv files.
+2022-06-29 13:12:57,845: ## Warning: Hourly nldas_hourly NetCDF file not found. Falling back to slower csv files.
+2022-06-29 13:13:41,433: ## Warning: Hourly nldas_hourly NetCDF file not found. Falling back to slower csv files.
+2022-06-29 13:14:25,035: Stored results at test/model_epoch003/test_results.p
