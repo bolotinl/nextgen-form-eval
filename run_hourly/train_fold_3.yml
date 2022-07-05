@@ -1,12 +1,12 @@
 # --- Experiment configurations --------------------------------------------------------------------
 
 # experiment name, used as folder name
-experiment_name: fold_0
+experiment_name: fold_3
 
 # files to specify training, validation and test basins (relative to code root or absolute path)
-train_basin_file: ./Basin_CV_Splits/basins_train_0.txt
+train_basin_file: ./Basin_CV_Splits/basins_train_3.txt
 validation_basin_file: 1_basin.txt
-test_basin_file: ./Basin_CV_Splits/basins_test_0.txt
+test_basin_file: ./Basin_CV_Splits/basins_test_3.txt
 
 # training, validation and test time periods (format = 'dd/mm/yyyy')
 train_start_date: "01/10/2007"
