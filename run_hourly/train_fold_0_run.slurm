@@ -2,9 +2,7 @@
 
 #SBATCH -p defq
 #SBATCH -J fold_0
-#SBATCH --exclude=gpu01     ### This node is heavily used
-#SBATCH --exclude=node01     ### This node is not working
-#SBATCH --ntasks=40                                   # Number of CPUs
+#SBATCH --nodelist=gpu01 
 #SBATCH -o train_fold_0.log
 #SBATCH -e train_fold_0.err
 

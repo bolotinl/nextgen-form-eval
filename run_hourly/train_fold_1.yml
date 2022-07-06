@@ -72,7 +72,7 @@ learning_rate:
 batch_size: 256
 
 # Number of training epochs
-epochs: 50
+epochs: 3
 
 # If a value, clips the gradients during training to that norm.
 clip_gradient_norm: 1
@@ -83,7 +83,7 @@ predict_last_n: 1
 
 # Length of the input sequence
 # If use_frequencies is used, this needs to be a dict mapping each frequency to a seq_length, else an int.
-seq_length: 4320
+seq_length: 270
 
 # Number of parallel workers used in the data pipeline
 num_workers: 8
@@ -92,7 +92,7 @@ num_workers: 8
 log_interval: 5
 
 # If true, writes logging results into tensorboard file
-log_tensorboard: True
+log_tensorboard: False
 
 # If a value and greater than 0, logs n random basins as figures during validation
 log_n_figures: 1
@@ -124,23 +124,14 @@ dynamic_inputs:
  - wind_v
 
 static_attributes:
+ - organic_frac
  - elev_mean
  - slope_mean
  - area_gages2
- - frac_forest
- - lai_max
- - lai_diff
- - gvf_max
- - gvf_diff
  - soil_depth_pelletier
- - soil_depth_statsgo
- - soil_porosity
- - soil_conductivity
- - max_water_content
  - sand_frac
  - silt_frac
  - clay_frac
- - carbonate_rocks_frac
  - geol_permeability
  - p_mean
  - pet_mean
@@ -150,6 +141,7 @@ static_attributes:
  - high_prec_dur
  - low_prec_freq
  - low_prec_dur
+
 # which columns to use as target
 target_variables:
   - QObs_CAMELS(mm/h)
