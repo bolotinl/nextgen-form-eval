@@ -124,7 +124,6 @@ dynamic_inputs:
  - wind_v
 
 static_attributes:
- - geol_porosity
  - organic_frac
  - elev_mean
  - slope_mean
