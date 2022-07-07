@@ -123,6 +123,7 @@ class BMI_CFE():
         # Inputs
         self.timestep_rainfall_input_m = 0
         self.potential_et_m_per_s      = 0
+        self.surface_partitioning_scheme = "Xinanjiang"
         
         # ________________________________________________
         # calculated flux variables
