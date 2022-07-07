@@ -17,8 +17,8 @@ class BMI_CFE():
         self._end_time = np.finfo("d").max
         
         # these need to be initialized here as scale_output() called in update()
-        self.streamflow_cms = 0.0
-        self.streamflow_fms = 0.0
+        self.streamflow_cmh = 0.0
+        #self.streamflow_fms = 0.0
         self.surface_runoff_m = 0.0
 
         #----------------------------------------------
@@ -29,7 +29,7 @@ class BMI_CFE():
             'version':            '1.0',
             'author_name':        'Jonathan Martin Frame',
             'grid_type':          'scalar',
-            'time_step_size':      1, 
+            'time_step_size':      3600, 
             'time_units':         '1 hour' }
     
         #---------------------------------------------
@@ -56,10 +56,10 @@ class BMI_CFE():
         #     since the input variable names could come from any forcing...
         #------------------------------------------------------
         self._var_name_units_map = {
-                                'land_surface_water__runoff_volume_flux':['streamflow_cfs','ft3 s-1'],
-                                'land_surface_water__runoff_depth':['total_discharge','m'],
+                                'land_surface_water__runoff_volume_flux':['streamflow_cmh','m3 h-1'],
+                                'land_surface_water__runoff_depth':['total_discharge','m h-1'],
                                 #--------------   Dynamic inputs --------------------------------
-                                'atmosphere_water__time_integral_of_precipitation_mass_flux':['timestep_rainfall_input_m','kg m-2'],
+                                'atmosphere_water__time_integral_of_precipitation_mass_flux':['timestep_rainfall_input_m','m h-2'],
                                 'water_potential_evaporation_flux':['potential_et_m_per_s','m s-1'],
                                 'DIRECT_RUNOFF':['surface_runoff_depth_m','m'],
                                 'GIUH_RUNOFF':['flux_giuh_runoff_m','m'],
@@ -113,11 +113,11 @@ class BMI_CFE():
         
         # ________________________________________________
         # Time control
-        self.time_step_size = 1
-        self.timestep_h = self.time_step_size
-        self.timestep_d = self.timestep_h * 24.0
+        self.time_step_size = 3600
+        self.timestep_h = self.time_step_size / 3600
+        self.timestep_d = self.timestep_h / 24.0
         self.current_time_step = 0
-        self.current_time = pd.Timestamp(year=1989, month=10, day=1, hour=4)
+        self.current_time = pd.Timestamp(year=2007, month=10, day=1, hour=0)
         
         # ________________________________________________
         # Inputs
@@ -150,7 +150,7 @@ class BMI_CFE():
         # Local values to be used in setting up soil reservoir
         trigger_z_m = 0.5
         
-        field_capacity_atm_press_fraction = 0.33
+        field_capacity_atm_press_fraction = self.alpha_fc
         
         H_water_table_m=field_capacity_atm_press_fraction * atm_press_Pa / unit_weight_water_N_per_m3 
         
@@ -196,13 +196,13 @@ class BMI_CFE():
         self.vol_in_gw_start           = self.gw_reservoir['storage_m']
 
         self.soil_reservoir = {'is_exponential':False,
-                                'wilting_point_m':self.soil_params['wltsmc'],
+                                'wilting_point_m':self.soil_params['wltsmc'] * self.soil_params['D'],
                                 'storage_max_m':self.soil_params['smcmax'] * self.soil_params['D'],
-                                'coeff_primary':self.soil_params['satdk'] * self.soil_params['slop'] * 3600.0,
+                                'coeff_primary':self.soil_params['satdk'] * self.soil_params['slop'] * self.time_step_size,
                                 'exponent_primary':1.0,
                                 'storage_threshold_primary_m':self.soil_params['smcmax'] * storage_thresh_pow_term*
                                                              (upper_lim-lower_lim),
-                                'coeff_secondary':0.01,
+                                'coeff_secondary':self.K_lf,
                                 'exponent_secondary':1.0,
                                 'storage_threshold_secondary_m':lateral_flow_threshold_storage_m}
         self.soil_reservoir['storage_m'] = self.soil_reservoir['storage_max_m'] * 0.667
@@ -211,14 +211,14 @@ class BMI_CFE():
         
         # ________________________________________________
         # Schaake
-        self.refkdt = 3.0
+        # self.refkdt = 3.0
         self.Schaake_adjusted_magic_constant_by_soil_type = self.refkdt * self.soil_params['satdk'] / 2.0e-06
         self.Schaake_output_runoff_m = 0
         self.infiltration_depth_m = 0
         
         # ________________________________________________
         # Nash cascade        
-        self.K_nash = 0.03
+        # self.K_nash = 0.03
 
         # ----------- The output is area normalized, this is needed to un-normalize it
         #                         mm->m                             km2 -> m2          hour->s    
@@ -309,6 +309,7 @@ class BMI_CFE():
         self.soil_params['slop']        = data_loaded['soil_params']['slop']
         self.soil_params['smcmax']      = data_loaded['soil_params']['smcmax']
         self.soil_params['wltsmc']      = data_loaded['soil_params']['wltsmc']
+        self.refkdt                     = data_loaded['refkdt']
         self.max_gw_storage             = data_loaded['max_gw_storage']
         self.Cgw                        = data_loaded['Cgw']
         self.expon                      = data_loaded['expon']
@@ -449,11 +450,11 @@ class BMI_CFE():
     #------------------------------------------------------------ 
     def scale_output(self):
             
-        self.surface_runoff_m = self.total_discharge
-        self._values['land_surface_water__runoff_depth'] = self.surface_runoff_m/1000
-        self.streamflow_cms = self._values['land_surface_water__runoff_depth'] * self.output_factor_cms
+        self.surface_runoff_m = self.flux_Qout_m    #self.total_discharge
+        self._values['land_surface_water__runoff_depth'] = self.surface_runoff_m
+        self.streamflow_cmh = self.total_discharge  #self._values['land_surface_water__runoff_depth'] * self.output_factor_cms
 
-        self._values['land_surface_water__runoff_volume_flux'] = self.streamflow_cms * (1/35.314)
+        self._values['land_surface_water__runoff_volume_flux'] = self.streamflow_cmh    # * (1/35.314)
 
         self._values["DIRECT_RUNOFF"] = self.surface_runoff_depth_m
         self._values["GIUH_RUNOFF"] = self.flux_giuh_runoff_m

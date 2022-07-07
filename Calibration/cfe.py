@@ -30,9 +30,9 @@ class CFE():
         # ________________________________________________
         # SUBROUTINE
         cfe_state.actual_et_from_soil_m_per_timestep = 0;
-        # if(cfe_state.soil_reservoir['storage_m'] > cfe_state.soil_reservoir['wilting_point_m']): 
-        #     self.et_from_soil(cfe_state)
-        self.et_from_soil(cfe_state)
+        if(cfe_state.soil_reservoir['storage_m'] > cfe_state.soil_reservoir['wilting_point_m']): 
+            self.et_from_soil(cfe_state)
+        # self.et_from_soil(cfe_state)
 
         #cfe_state.vol_et_from_soil += cfe_state.actual_et_from_soil_m_per_timestep;
         #cfe_state.vol_et_to_atm += cfe_state.actual_et_from_soil_m_per_timestep;
@@ -50,15 +50,19 @@ class CFE():
         # Calculates the value for surface_runoff_depth_m
         if (0.0 < cfe_state.timestep_rainfall_input_m): 
             self.Schaake_partitioning_scheme(cfe_state)
+        else: 
+            self.surface_runoff_depth_m = 0.0
+            self.infiltration_depth_m = 0.0
 
         # cfe in nextgen added a new routine (Xinanjiang), but not implemented here.
 
         # ________________________________________________
         if cfe_state.soil_reservoir_storage_deficit_m < cfe_state.infiltration_depth_m:
-            # put won't fit back into runoff
+            
             cfe_state.surface_runoff_depth_m += (cfe_state.infiltration_depth_m - cfe_state.soil_reservoir_storage_deficit_m)
             cfe_state.infiltration_depth_m = cfe_state.soil_reservoir_storage_deficit_m
             cfe_state.soil_reservoir['storage_m'] = cfe_state.soil_reservoir['storage_max_m']
+            cfe_state.soil_reservoir_storage_deficit_m = 0
 
         # ________________________________________________
         cfe_state.vol_sch_runoff += cfe_state.surface_runoff_depth_m
@@ -88,8 +92,8 @@ class CFE():
         self.conceptual_reservoir_flux_calc(cfe_state, cfe_state.soil_reservoir)
 
         # ________________________________________________
-        cfe_state.flux_perc_m = cfe_state.primary_flux
-        cfe_state.flux_lat_m = cfe_state.secondary_flux
+        cfe_state.flux_perc_m = cfe_state.primary_flux  #percolation_flux
+        cfe_state.flux_lat_m = cfe_state.secondary_flux # lateral_flux
 
         # ________________________________________________
         cfe_state.gw_reservoir_storage_deficit_m = cfe_state.gw_reservoir['storage_max_m'] - cfe_state.gw_reservoir['storage_m']
@@ -153,11 +157,11 @@ class CFE():
         
         # ________________________________________________
         cfe_state.flux_Qout_m = cfe_state.flux_giuh_runoff_m + cfe_state.flux_nash_lateral_runoff_m + cfe_state.flux_from_deep_gw_to_chan_m
-        cfe_state.total_discharge = cfe_state.flux_Qout_m * cfe_state.catchment_area_km2 * 1000000.0 / 3600.0
+        cfe_state.total_discharge = cfe_state.flux_Qout_m * cfe_state.catchment_area_km2 * 1000000.0 
         
         # ________________________________________________
         cfe_state.current_time_step += 1
-        cfe_state.current_time      += pd.Timedelta(value=cfe_state.time_step_size, unit='h')
+        cfe_state.current_time      += pd.Timedelta(value=cfe_state.time_step_size, unit='s')
 
         return
     
@@ -201,7 +205,10 @@ class CFE():
                 runoff_queue_m_per_timestep
         """
 
-#        cfe_state.runoff_queue_m_per_timestep[-1] = 0
+        N=cfe_state.num_giuh_ordinates-1
+
+        cfe_state.runoff_queue_m_per_timestep[N] = 0
+        
         
         for i in range(cfe_state.num_giuh_ordinates): 
 
@@ -216,7 +223,7 @@ class CFE():
             
             cfe_state.runoff_queue_m_per_timestep[i-1] = cfe_state.runoff_queue_m_per_timestep[i]
 
-        cfe_state.runoff_queue_m_per_timestep[-1] = 0
+        cfe_state.runoff_queue_m_per_timestep[N] = 0.0
 
         return
     
@@ -232,15 +239,15 @@ class CFE():
 
             if cfe_state.timestep_rainfall_input_m > cfe_state.potential_et_m_per_timestep:
         
-                cfe_state.actual_et_m_per_timestep = cfe_state.potential_et_m_per_timestep
-                cfe_state.timestep_rainfall_input_m -= cfe_state.actual_et_m_per_timestep
+                cfe_state.actual_et_from_rain_m_per_timestep = cfe_state.potential_et_m_per_timestep
+                cfe_state.timestep_rainfall_input_m -= cfe_state.actual_et_from_rain_m_per_timestep
 
             else: 
 
-                cfe_state.actual_et_m_per_timestep = cfe_state.timestep_rainfall_input_m
+                cfe_state.actual_et_from_rain_m_per_timestep = cfe_state.timestep_rainfall_input_m
                 cfe_state.timestep_rainfall_input_m=0.0
         
-        cfe_state.reduced_potential_et_m_per_timestep = cfe_state.potential_et_m_per_timestep-cfe_state.actual_et_m_per_timestep
+        cfe_state.reduced_potential_et_m_per_timestep = cfe_state.potential_et_m_per_timestep-cfe_state.actual_et_from_rain_m_per_timestep
 
         return
                 
@@ -368,16 +375,12 @@ class CFE():
         
         if cfe_state.reduced_potential_et_m_per_timestep > 0:
             
-            if cfe_state.current_time_step == 0: print("trying to fix the bug.Hope this works. :)")
+            if cfe_state.current_time_step == 0: print("trying to fix the bug. Hope this works. :)")
             
             if cfe_state.soil_reservoir['storage_m'] >= cfe_state.soil_reservoir['storage_threshold_primary_m']:
             
-                cfe_state.actual_et_m_per_timestep = np.minimum(cfe_state.reduced_potential_et_m_per_timestep, 
+                cfe_state.actual_et_from_soil_m_per_timestep = np.minimum(cfe_state.reduced_potential_et_m_per_timestep, 
                                                        cfe_state.soil_reservoir['storage_m'])
-
-                #cfe_state.soil_reservoir['storage_m'] -= cfe_state.actual_et_m_per_timestep
-
-                #cfe_state.potential_et_m_per_timestep = 0.0
                                
             elif (cfe_state.soil_reservoir['storage_m'] > cfe_state.soil_reservoir['wilting_point_m'] and 
                   cfe_state.soil_reservoir['storage_m'] < cfe_state.soil_reservoir['storage_threshold_primary_m']):
@@ -389,7 +392,7 @@ class CFE():
 
                 cfe_state.actual_et_from_soil_m_per_timestep = np.minimum(Budyko * cfe_state.reduced_potential_et_m_per_timestep,cfe_state.soil_reservoir['storage_m'])
                                
-            cfe_state.soil_reservoir['storage_m'] -= cfe_state.actual_et_m_per_timestep
+            cfe_state.soil_reservoir['storage_m'] -= cfe_state.actual_et_from_soil_m_per_timestep
             cfe_state.reduced_potential_et_m_per_timestep = cfe_state.reduced_potential_et_m_per_timestep - cfe_state.actual_et_from_soil_m_per_timestep
         return
             
