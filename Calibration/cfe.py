@@ -14,25 +14,22 @@ class CFE():
         cfe_state.potential_et_m_per_timestep = cfe_state.potential_et_m_per_s * cfe_state.time_step_size
         cfe_state.reduced_potential_et_m_per_timestep = cfe_state.potential_et_m_per_s * cfe_state.time_step_size
 
-        cfe_state.actual_et_from_rain_m_per_timestep = 0;
-
-        # ________________________________________________
-        # SUBROUTINE
+        # ---------------------- SUBROUTINE ---------------------- #
+        # ET from rain
         # timestep_rainfall_input_m = f(timestep_rainfall_input_m, potential_et_m_per_timestep)
+        cfe_state.actual_et_from_rain_m_per_timestep = 0;
         if(cfe_state.timestep_rainfall_input_m > 0):self.et_from_rainfall(cfe_state)
         
-
         # ________________________________________________
         #cfe_state.vol_et_from_rain += cfe_state.actual_et_from_rain_m_per_timestep
         #cfe_state.vol_et_to_atm += cfe_state.actual_et_from_rain_m_per_timestep
         cfe_state.volout += cfe_state.actual_et_from_rain_m_per_timestep;
 
-        # ________________________________________________
-        # SUBROUTINE
+        # ---------------------- SUBROUTINE ---------------------- #
+        # ET from soil
         cfe_state.actual_et_from_soil_m_per_timestep = 0;
         if(cfe_state.soil_reservoir['storage_m'] > cfe_state.soil_reservoir['wilting_point_m']): 
             self.et_from_soil(cfe_state)
-        # self.et_from_soil(cfe_state)
 
         #cfe_state.vol_et_from_soil += cfe_state.actual_et_from_soil_m_per_timestep;
         #cfe_state.vol_et_to_atm += cfe_state.actual_et_from_soil_m_per_timestep;
@@ -45,8 +42,7 @@ class CFE():
                                                  cfe_state.soil_params['D'] - \
                                                  cfe_state.soil_reservoir['storage_m'])
         
-        # ________________________________________________
-        # SUBROUTINE
+        # ---------------------- SUBROUTINE ---------------------- #
         # Calculates the value for surface_runoff_depth_m
         if (0.0 < cfe_state.timestep_rainfall_input_m): 
             self.Schaake_partitioning_scheme(cfe_state)
@@ -86,8 +82,7 @@ class CFE():
         cfe_state.vol_to_soil += cfe_state.infiltration_depth_m
         cfe_state.soil_reservoir['storage_m'] += cfe_state.infiltration_depth_m
 
-        # ________________________________________________
-        # SUBROUTINE
+        # ---------------------- SUBROUTINE ---------------------- #
         # primary_flux, secondary_flux = f(reservoir)
         self.conceptual_reservoir_flux_calc(cfe_state, cfe_state.soil_reservoir)
 
@@ -116,8 +111,7 @@ class CFE():
         cfe_state.volout                       = cfe_state.volout + cfe_state.flux_lat_m
 
             
-        # ________________________________________________
-        # SUBROUTINE
+        # ---------------------- SUBROUTINE ---------------------- #
         # primary_flux, secondary_flux = f(reservoir)
         self.conceptual_reservoir_flux_calc(cfe_state, cfe_state.gw_reservoir) 
             
@@ -138,8 +132,7 @@ class CFE():
         # ________________________________________________                               
         cfe_state.gw_reservoir['storage_m'] -= cfe_state.flux_from_deep_gw_to_chan_m
         
-        # ________________________________________________
-        # SUBROUTINE
+        # ---------------------- SUBROUTINE ---------------------- #
         # giuh_runoff_m = f(Schaake_output, giuh_ordinates, runoff_queue_m_per_timestep)
         self.convolution_integral(cfe_state)
         
@@ -147,8 +140,7 @@ class CFE():
         cfe_state.vol_out_giuh += cfe_state.flux_giuh_runoff_m
         cfe_state.volout += cfe_state.flux_giuh_runoff_m + cfe_state.flux_from_deep_gw_to_chan_m
         
-        # ________________________________________________
-        # SUBROUTINE
+        # ---------------------- SUBROUTINE ---------------------- #
         self.nash_cascade(cfe_state)
 
         # ________________________________________________
