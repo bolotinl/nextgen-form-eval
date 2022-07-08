@@ -15,6 +15,10 @@ class CFE():
         cfe_state.potential_et_m_per_timestep = cfe_state.potential_et_m_per_s * cfe_state.time_step_size
         cfe_state.reduced_potential_et_m_per_timestep = cfe_state.potential_et_m_per_s * cfe_state.time_step_size
 
+        if cfe_state.current_time_step <= 10 or (cfe_state.current_time_step >= 60 and cfe_state.current_time_step <=70): 
+            print("---------------- Current Timestep: " + str(cfe_state.current_time_step) + "----------------")
+            print("rainfall_input: {:8.4f} m. \n".format(cfe_state.timestep_rainfall_input_m))
+            
         # ---------------------- SUBROUTINE ---------------------- #
         # ET from rain
         # timestep_rainfall_input_m = f(timestep_rainfall_input_m, potential_et_m_per_timestep)
@@ -28,8 +32,8 @@ class CFE():
         cfe_state.volout += cfe_state.actual_et_from_rain_m_per_timestep
         
         if cfe_state.current_time_step <= 10 or (cfe_state.current_time_step >= 60 and cfe_state.current_time_step <=70): 
-            print("---------------- Current Timestep: " + str(cfe_state.current_time_step) + "----------------")
             print("after rainfall et: ")
+            print("rainfall_input: {:8.4f} m ".format(cfe_state.timestep_rainfall_input_m))
             print("total out vol: {:8.4f} mm,\n".format(cfe_state.volout*1000.0))
 
         # ---------------------- SUBROUTINE ---------------------- #
@@ -51,6 +55,7 @@ class CFE():
         
         if cfe_state.current_time_step <= 10 or (cfe_state.current_time_step >= 60 and cfe_state.current_time_step <=70): 
             print("after soil et: ")
+            print("rainfall_input: {:8.4f} m ".format(cfe_state.timestep_rainfall_input_m))
             print("total out vol: {:8.4f} mm,\n".format(cfe_state.volout*1000.0))
 
 

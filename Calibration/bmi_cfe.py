@@ -74,7 +74,7 @@ class BMI_CFE():
     #__________________________________________________________________
     #__________________________________________________________________
     # BMI: Model Control Function
-    def initialize(self, current_time_step=0):
+    def initialize(self,param_vec,scheme,current_time_step=0):
         self.current_time_step=current_time_step
 
         # ----- Create some lookup tabels from the long variable names --------#
@@ -93,6 +93,7 @@ class BMI_CFE():
         ############################################################
         # ________________________________________________________ #
         # GET VALUES FROM CONFIGURATION FILE.                      #
+        self.param_vector = param_vec
         self.config_from_json()                                    #
         
         # ________________________________________________
@@ -123,7 +124,7 @@ class BMI_CFE():
         # Inputs
         self.timestep_rainfall_input_m = 0
         self.potential_et_m_per_s      = 0
-        self.surface_partitioning_scheme = "Xinanjiang"
+        self.surface_partitioning_scheme = scheme
         
         # ________________________________________________
         # calculated flux variables
@@ -185,14 +186,15 @@ class BMI_CFE():
         # ________________________________________________
         # Subsurface reservoirs
         self.gw_reservoir = {'is_exponential':True,
-                              'storage_max_m':1.0,
-                              'coeff_primary':0.01,
-                              'exponent_primary':6.0,
+                              'storage_max_m':self.max_gw_storage,
+                              'coeff_primary':self.Cgw,
+                              'exponent_primary':self.expon,
                               'storage_threshold_primary_m':0.0,
                               'storage_threshold_secondary_m':0.0,
                               'coeff_secondary':0.0,
                               'exponent_secondary':1.0}
         self.gw_reservoir['storage_m'] = self.gw_reservoir['storage_max_m'] * 0.01
+        #self.gw_reservoir['storage_m'] = self.gw_storage
         self.volstart                 += self.gw_reservoir['storage_m']
         self.vol_in_gw_start           = self.gw_reservoir['storage_m']
 
@@ -207,6 +209,7 @@ class BMI_CFE():
                                 'exponent_secondary':1.0,
                                 'storage_threshold_secondary_m':lateral_flow_threshold_storage_m}
         self.soil_reservoir['storage_m'] = self.soil_reservoir['storage_max_m'] * 0.667
+        #self.soil_reservoir['storage_m'] = self.soil_storage
         self.volstart                   += self.soil_reservoir['storage_m']
         self.vol_soil_start              = self.soil_reservoir['storage_m']
         
@@ -340,7 +343,20 @@ class BMI_CFE():
         if 'unit_test' in data_loaded.keys():
             self.unit_test                      = data_loaded['unit_test']
             self.compare_results_file           = data_loaded['compare_results_file']
-         
+        
+        # ___________________________________________________
+        # Calibrating parameters
+        if self.param_vector != []: 
+            self.soil_params['bb']=self.param_vector[0]
+            self.soil_params['smcmax']=self.param_vector[1]
+            self.soil_params['satdk']=self.param_vector[2]
+            self.soil_params['slop']=self.param_vector[3]
+            self.max_gw_storage=self.param_vector[4]
+            self.expon=self.param_vector[5]
+            self.Cgw=self.param_vector[6]
+            self.K_lf=self.param_vector[7]
+            self.K_nash=self.param_vector[8]
+
         return
 
     
