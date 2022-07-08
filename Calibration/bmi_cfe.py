@@ -59,7 +59,7 @@ class BMI_CFE():
                                 'land_surface_water__runoff_volume_flux':['streamflow_cmh','m3 h-1'],
                                 'land_surface_water__runoff_depth':['total_discharge','m h-1'],
                                 #--------------   Dynamic inputs --------------------------------
-                                'atmosphere_water__time_integral_of_precipitation_mass_flux':['timestep_rainfall_input_m','m h-2'],
+                                'atmosphere_water__time_integral_of_precipitation_mass_flux':['timestep_rainfall_input_m','m h-1'],
                                 'water_potential_evaporation_flux':['potential_et_m_per_s','m s-1'],
                                 'DIRECT_RUNOFF':['surface_runoff_depth_m','m'],
                                 'GIUH_RUNOFF':['flux_giuh_runoff_m','m'],
@@ -74,7 +74,7 @@ class BMI_CFE():
     #__________________________________________________________________
     #__________________________________________________________________
     # BMI: Model Control Function
-    def initialize(self, current_time_step=0):
+    def initialize(self,param_vec,scheme,current_time_step=0):
         self.current_time_step=current_time_step
 
         # ----- Create some lookup tabels from the long variable names --------#
@@ -93,6 +93,7 @@ class BMI_CFE():
         ############################################################
         # ________________________________________________________ #
         # GET VALUES FROM CONFIGURATION FILE.                      #
+        self.param_vector = param_vec
         self.config_from_json()                                    #
         
         # ________________________________________________
@@ -123,7 +124,7 @@ class BMI_CFE():
         # Inputs
         self.timestep_rainfall_input_m = 0
         self.potential_et_m_per_s      = 0
-        self.surface_partitioning_scheme = "Xinanjiang"
+        self.surface_partitioning_scheme = scheme
         
         # ________________________________________________
         # calculated flux variables
@@ -143,8 +144,8 @@ class BMI_CFE():
          
         # ________________________________________________________
         # Set these values now that we have the information from the configuration file.
-        self.runoff_queue_m_per_timestep = np.zeros(len(self.giuh_ordinates))
-        self.num_giuh_ordinates = len(self.runoff_queue_m_per_timestep)
+        self.runoff_queue_m_per_timestep = np.zeros(len(self.giuh_ordinates)+1)
+        self.num_giuh_ordinates = len(self.giuh_ordinates)
         self.num_lateral_flow_nash_reservoirs = self.nash_storage.shape[0]
         
         # ________________________________________________
@@ -185,14 +186,15 @@ class BMI_CFE():
         # ________________________________________________
         # Subsurface reservoirs
         self.gw_reservoir = {'is_exponential':True,
-                              'storage_max_m':1.0,
-                              'coeff_primary':0.01,
-                              'exponent_primary':6.0,
+                              'storage_max_m':self.max_gw_storage,
+                              'coeff_primary':self.Cgw,
+                              'exponent_primary':self.expon,
                               'storage_threshold_primary_m':0.0,
                               'storage_threshold_secondary_m':0.0,
                               'coeff_secondary':0.0,
                               'exponent_secondary':1.0}
         self.gw_reservoir['storage_m'] = self.gw_reservoir['storage_max_m'] * 0.01
+        #self.gw_reservoir['storage_m'] = self.gw_storage
         self.volstart                 += self.gw_reservoir['storage_m']
         self.vol_in_gw_start           = self.gw_reservoir['storage_m']
 
@@ -207,6 +209,7 @@ class BMI_CFE():
                                 'exponent_secondary':1.0,
                                 'storage_threshold_secondary_m':lateral_flow_threshold_storage_m}
         self.soil_reservoir['storage_m'] = self.soil_reservoir['storage_max_m'] * 0.667
+        #self.soil_reservoir['storage_m'] = self.soil_storage
         self.volstart                   += self.soil_reservoir['storage_m']
         self.vol_soil_start              = self.soil_reservoir['storage_m']
         
@@ -225,6 +228,9 @@ class BMI_CFE():
         #                         mm->m                             km2 -> m2          hour->s    
         self.output_factor_cms =  (1/1000) * (self.catchment_area_km2 * 1000*1000) * (1/3600)
 
+        self.precip_check_before_run = []
+        self.precip_check_after_run = []
+
         ####################################################################
         # ________________________________________________________________ #
         # ________________________________________________________________ #
@@ -239,7 +245,11 @@ class BMI_CFE():
     # __________________________________________________________________________________________________________
     # BMI: Model Control Function
     def update(self):
+        self.volin += self.timestep_rainfall_input_m
+        self.precip_check_before_run.append(self.timestep_rainfall_input_m)
+        # append this to a list and plot against precipitation forcing
         self.cfe_model.run_cfe(self)
+        self.precip_check_after_run.append(self.timestep_rainfall_input_m)
         self.scale_output()
 
     # __________________________________________________________________________________________________________
@@ -269,6 +279,8 @@ class BMI_CFE():
     # Mass balance tracking
     def reset_volume_tracking(self):
         self.volstart             = 0
+        self.vol_et_from_soil     = 0
+        self.vol_et_from_rain     = 0
         self.vol_sch_runoff       = 0
         self.vol_sch_infilt       = 0
         self.vol_out_giuh         = 0
@@ -331,7 +343,20 @@ class BMI_CFE():
         if 'unit_test' in data_loaded.keys():
             self.unit_test                      = data_loaded['unit_test']
             self.compare_results_file           = data_loaded['compare_results_file']
-         
+        
+        # ___________________________________________________
+        # Calibrating parameters
+        if self.param_vector != []: 
+            self.soil_params['bb']=self.param_vector[0]
+            self.soil_params['smcmax']=self.param_vector[1]
+            self.soil_params['satdk']=self.param_vector[2]
+            self.soil_params['slop']=self.param_vector[3]
+            self.max_gw_storage=self.param_vector[4]
+            self.expon=self.param_vector[5]
+            self.Cgw=self.param_vector[6]
+            self.K_lf=self.param_vector[7]
+            self.K_nash=self.param_vector[8]
+
         return
 
     
@@ -348,10 +373,10 @@ class BMI_CFE():
         self.vol_soil_end = self.soil_reservoir['storage_m']
         
         self.global_residual  = self.volstart + self.volin - self.volout - self.volend -self.vol_end_giuh
-        self.schaake_residual = self.volin - self.vol_sch_runoff - self.vol_sch_infilt
+        self.schaake_residual = self.volin - self.vol_sch_runoff - self.vol_sch_infilt - self.vol_et_from_rain
         self.giuh_residual    = self.vol_sch_runoff - self.vol_out_giuh - self.vol_end_giuh
         self.soil_residual    = self.vol_soil_start + self.vol_sch_infilt - \
-                                self.vol_soil_to_lat_flow - self.vol_soil_end - self.vol_to_gw
+                                self.vol_soil_to_lat_flow - self.vol_soil_end - self.vol_to_gw - self.vol_et_from_soil
         self.nash_residual    = self.vol_in_nash - self.vol_out_nash - self.vol_in_nash_end
         self.gw_residual      = self.vol_in_gw_start + self.vol_to_gw - self.vol_from_gw - self.vol_in_gw_end
         if verbose:            
@@ -364,9 +389,10 @@ class BMI_CFE():
 
 
             print("\nSCHAAKE MASS BALANCE")
-            print("  surface runoff: {:8.4f}".format(self.vol_sch_runoff))
-            print("    infiltration: {:8.4f}".format(self.vol_sch_infilt))
-            print("schaake residual: {:6.4e}".format(self.schaake_residual))  
+            print("    surface runoff: {:8.4f}".format(self.vol_sch_runoff))
+            print("      infiltration: {:8.4f}".format(self.vol_sch_infilt))
+            print(" vol. et from rain: {:8.4f}".format(self.vol_et_from_rain)) 
+            print("  schaake residual: {:6.4e}".format(self.schaake_residual))  
 
             print("\nGIUH MASS BALANCE");
             print("  vol. into giuh: {:8.4f}".format(self.vol_sch_runoff))
@@ -375,12 +401,13 @@ class BMI_CFE():
             print("   giuh residual: {:6.4e}".format(self.giuh_residual))
 
             print("\nSOIL WATER CONCEPTUAL RESERVOIR MASS BALANCE")
-            print("   init soil vol: {:8.4f}".format(self.vol_soil_start))     
-            print("  vol. into soil: {:8.4f}".format(self.vol_sch_infilt))
-            print("vol.soil2latflow: {:8.4f}".format(self.vol_soil_to_lat_flow))
-            print(" vol. soil to gw: {:8.4f}".format(self.vol_soil_to_gw))
-            print(" final vol. soil: {:8.4f}".format(self.vol_soil_end))   
-            print("vol. soil resid.: {:6.4e}".format(self.soil_residual))
+            print("     init soil vol: {:8.4f}".format(self.vol_soil_start))     
+            print("    vol. into soil: {:8.4f}".format(self.vol_sch_infilt))
+            print("  vol.soil2latflow: {:8.4f}".format(self.vol_soil_to_lat_flow))
+            print("   vol. soil to gw: {:8.4f}".format(self.vol_soil_to_gw))
+            print(" vol. et from soil: {:8.4f}".format(self.vol_et_from_soil))
+            print("   final vol. soil: {:8.4f}".format(self.vol_soil_end))   
+            print("  vol. soil resid.: {:6.4e}".format(self.soil_residual))
 
 
             print("\nNASH CASCADE CONCEPTUAL RESERVOIR MASS BALANCE")
