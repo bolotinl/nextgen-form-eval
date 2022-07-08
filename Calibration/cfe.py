@@ -18,23 +18,29 @@ class CFE():
         # ---------------------- SUBROUTINE ---------------------- #
         # ET from rain
         # timestep_rainfall_input_m = f(timestep_rainfall_input_m, potential_et_m_per_timestep)
-        cfe_state.actual_et_from_rain_m_per_timestep = 0;
-        if(cfe_state.timestep_rainfall_input_m > 0):self.et_from_rainfall(cfe_state)
+        cfe_state.actual_et_from_rain_m_per_timestep = 0
+        if(cfe_state.timestep_rainfall_input_m > 0):
+            self.et_from_rainfall(cfe_state)
         
         # ________________________________________________
-        #cfe_state.vol_et_from_rain += cfe_state.actual_et_from_rain_m_per_timestep
+        cfe_state.vol_et_from_rain += cfe_state.actual_et_from_rain_m_per_timestep
         #cfe_state.vol_et_to_atm += cfe_state.actual_et_from_rain_m_per_timestep
-        cfe_state.volout += cfe_state.actual_et_from_rain_m_per_timestep;
+        cfe_state.volout += cfe_state.actual_et_from_rain_m_per_timestep
+        
+        if cfe_state.current_time_step <= 10 or (cfe_state.current_time_step >= 60 and cfe_state.current_time_step <=70): 
+            print("---------------- Current Timestep: " + str(cfe_state.current_time_step) + "----------------")
+            print("after rainfall et: ")
+            print("total out vol: {:8.4f} mm,\n".format(cfe_state.volout*1000.0))
 
         # ---------------------- SUBROUTINE ---------------------- #
         # ET from soil
-        cfe_state.actual_et_from_soil_m_per_timestep = 0;
+        cfe_state.actual_et_from_soil_m_per_timestep = 0
         if(cfe_state.soil_reservoir['storage_m'] > cfe_state.soil_reservoir['wilting_point_m']): 
             self.et_from_soil(cfe_state)
 
-        #cfe_state.vol_et_from_soil += cfe_state.actual_et_from_soil_m_per_timestep;
+        cfe_state.vol_et_from_soil += cfe_state.actual_et_from_soil_m_per_timestep;
         #cfe_state.vol_et_to_atm += cfe_state.actual_et_from_soil_m_per_timestep;
-        cfe_state.volout += cfe_state.actual_et_from_soil_m_per_timestep; 
+        cfe_state.volout += cfe_state.actual_et_from_soil_m_per_timestep 
 
         cfe_state.actual_et_m_per_timestep= cfe_state.actual_et_from_rain_m_per_timestep + cfe_state.actual_et_from_soil_m_per_timestep
   
@@ -43,11 +49,18 @@ class CFE():
                                                  cfe_state.soil_params['D'] - \
                                                  cfe_state.soil_reservoir['storage_m'])
         
+        if cfe_state.current_time_step <= 10 or (cfe_state.current_time_step >= 60 and cfe_state.current_time_step <=70): 
+            print("after soil et: ")
+            print("total out vol: {:8.4f} mm,\n".format(cfe_state.volout*1000.0))
+
+
         # ---------------------- SUBROUTINE ---------------------- #
         # Calculates the value for surface_runoff_depth_m
-        if (0.0 < cfe_state.timestep_rainfall_input_m): 
-            if cfe_state.surface_partitioning_scheme == "Schaake": self.Schaake_partitioning_scheme(cfe_state)
-            elif cfe_state.surface_partitioning_scheme == "Xinanjiang": self.Xinanjiang_partitioning_scheme(cfe_state)
+        if (cfe_state.timestep_rainfall_input_m > 0): 
+            if cfe_state.surface_partitioning_scheme == "Schaake": 
+                self.Schaake_partitioning_scheme(cfe_state)
+            elif cfe_state.surface_partitioning_scheme == "Xinanjiang": 
+                self.Xinanjiang_partitioning_scheme(cfe_state)
             else: 
                 print("Problem: must specify one of Schaake of Xinanjiang partitioning scheme.\n")
                 print("Program terminating.:( \n");
@@ -64,10 +77,20 @@ class CFE():
             cfe_state.infiltration_depth_m = cfe_state.soil_reservoir_storage_deficit_m
             cfe_state.soil_reservoir['storage_m'] = cfe_state.soil_reservoir['storage_max_m']
             cfe_state.soil_reservoir_storage_deficit_m = 0
+        
+        if cfe_state.current_time_step <= 10 or (cfe_state.current_time_step >= 60 and cfe_state.current_time_step <=70): 
+            print(f"After direct runoff function: ") 
+            print("rain: {:8.4f} mm,".format(cfe_state.timestep_rainfall_input_m*1000.0))
+            print("runoff: {:8.4f} mm,".format(cfe_state.surface_runoff_depth_m*1000.0)) 
+            print("residual:{:8.4f} mm".format((cfe_state.timestep_rainfall_input_m-cfe_state.surface_runoff_depth_m-cfe_state.infiltration_depth_m)*1000))
 
         # ________________________________________________
         cfe_state.vol_sch_runoff += cfe_state.surface_runoff_depth_m
         cfe_state.vol_sch_infilt += cfe_state.infiltration_depth_m
+
+        if cfe_state.current_time_step <= 10 or (cfe_state.current_time_step >= 60 and cfe_state.current_time_step <=70): 
+            print("runoff volume: {:8.4f} mm,".format(cfe_state.vol_sch_runoff*1000.0))
+            print("infiltration volume: {:8.4f} mm,\n".format(cfe_state.vol_sch_infilt*1000.0)) 
 
         # ________________________________________________
         if cfe_state.current_time_step == 0:
@@ -82,7 +105,12 @@ class CFE():
             cfe_state.surface_runoff_depth_m += diff
 
             cfe_state.soil_reservoir_storage_deficit_m = 0
-            
+        
+        if cfe_state.current_time_step <= 10 or (cfe_state.current_time_step >= 60 and cfe_state.current_time_step <=70): 
+            print("after previous step percolation: ")
+            print("runoff volume: {:8.4f} mm,".format(cfe_state.vol_sch_runoff*1000.0))
+            print("infiltration volume: {:8.4f} mm,\n".format(cfe_state.vol_sch_infilt*1000.0)) 
+
         # ________________________________________________
         cfe_state.vol_to_soil += cfe_state.infiltration_depth_m
         cfe_state.soil_reservoir['storage_m'] += cfe_state.infiltration_depth_m
@@ -115,7 +143,12 @@ class CFE():
         cfe_state.vol_soil_to_lat_flow        += cfe_state.flux_lat_m  #TODO add this to nash cascade as input
         cfe_state.volout                       = cfe_state.volout + cfe_state.flux_lat_m
 
-            
+        if cfe_state.current_time_step <= 10 or (cfe_state.current_time_step >= 60 and cfe_state.current_time_step <=70): 
+            print("after soil reservoir flux calculation: ")
+            print("runoff volume: {:8.4f} mm,".format(cfe_state.vol_sch_runoff*1000.0))
+            print("infiltration volume: {:8.4f} mm,".format(cfe_state.vol_sch_infilt*1000.0)) 
+            print("total out vol.:{:8.4f} mm\n".format(cfe_state.volout*1000.0))
+
         # ---------------------- SUBROUTINE ---------------------- #
         # primary_flux, secondary_flux = f(reservoir)
         self.conceptual_reservoir_flux_calc(cfe_state, cfe_state.gw_reservoir) 
@@ -137,6 +170,11 @@ class CFE():
         # ________________________________________________                               
         cfe_state.gw_reservoir['storage_m'] -= cfe_state.flux_from_deep_gw_to_chan_m
         
+        if cfe_state.current_time_step <= 10 or (cfe_state.current_time_step >= 60 and cfe_state.current_time_step <=70): 
+            print("after gw reservoir flux calculation: ")
+            print("runoff volume: {:8.4f} mm,".format(cfe_state.vol_sch_runoff*1000.0))
+            print("infiltration volume: {:8.4f} mm,\n".format(cfe_state.vol_sch_infilt*1000.0)) 
+            
         # ---------------------- SUBROUTINE ---------------------- #
         # giuh_runoff_m = f(Schaake_output, giuh_ordinates, runoff_queue_m_per_timestep)
         self.convolution_integral(cfe_state)
@@ -145,6 +183,10 @@ class CFE():
         cfe_state.vol_out_giuh += cfe_state.flux_giuh_runoff_m
         cfe_state.volout += cfe_state.flux_giuh_runoff_m + cfe_state.flux_from_deep_gw_to_chan_m
         
+        if cfe_state.current_time_step <= 10 or (cfe_state.current_time_step >= 60 and cfe_state.current_time_step <=70): 
+            print("after giuh cascade: ")
+            print("total out vol.:{:8.4f} mm\n".format(cfe_state.volout*1000.0))
+
         # ---------------------- SUBROUTINE ---------------------- #
         self.nash_cascade(cfe_state)
 
@@ -202,7 +244,7 @@ class CFE():
                 runoff_queue_m_per_timestep
         """
 
-        N=cfe_state.num_giuh_ordinates-1
+        N=cfe_state.num_giuh_ordinates
 
         cfe_state.runoff_queue_m_per_timestep[N] = 0
         
@@ -220,7 +262,7 @@ class CFE():
             
             cfe_state.runoff_queue_m_per_timestep[i-1] = cfe_state.runoff_queue_m_per_timestep[i]
 
-        cfe_state.runoff_queue_m_per_timestep[N] = 0.0
+        cfe_state.runoff_queue_m_per_timestep[N-1] = 0.0
 
         return
     
@@ -486,7 +528,7 @@ class CFE():
         
         if cfe_state.reduced_potential_et_m_per_timestep > 0:
             
-            if cfe_state.current_time_step == 0: print("trying to fix the bug. Hope this works. :)")
+            #if cfe_state.current_time_step == 0: print("trying to fix the bug. Hope this works. :)")
             
             if cfe_state.soil_reservoir['storage_m'] >= cfe_state.soil_reservoir['storage_threshold_primary_m']:
             
