@@ -247,7 +247,6 @@ class BMI_CFE():
     def update(self):
         self.volin += self.timestep_rainfall_input_m
         self.precip_check_before_run.append(self.timestep_rainfall_input_m)
-        # append this to a list and plot against precipitation forcing
         self.cfe_model.run_cfe(self)
         self.precip_check_after_run.append(self.timestep_rainfall_input_m)
         self.scale_output()
