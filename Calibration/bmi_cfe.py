@@ -74,7 +74,7 @@ class BMI_CFE():
     #__________________________________________________________________
     #__________________________________________________________________
     # BMI: Model Control Function
-    def initialize(self,param_vec,scheme,current_time_step=0):
+    def initialize(self,param_vec,current_time_step=0):
         self.current_time_step=current_time_step
 
         # ----- Create some lookup tabels from the long variable names --------#
@@ -124,7 +124,14 @@ class BMI_CFE():
         # Inputs
         self.timestep_rainfall_input_m = 0
         self.potential_et_m_per_s      = 0
-        self.surface_partitioning_scheme = scheme
+
+        if param_vec == []: self.surface_partitioning_scheme = "Schaake"
+        else: 
+            if (0 <= param_vec[9]) and (param_vec[9] <= 0.5): 
+                self.surface_partitioning_scheme = "Schaake"
+            elif (0.5 < param_vec[9]) and (param_vec[9] <= 1): 
+                self.surface_partitioning_scheme = "Xinanjiang"
+            else: print("need to define the runoff scheme")
         
         # ________________________________________________
         # calculated flux variables
@@ -331,6 +338,7 @@ class BMI_CFE():
         self.K_nash                     = data_loaded['K_nash']
         self.nash_storage               = np.array(data_loaded['nash_storage'])
         self.giuh_ordinates             = np.array(data_loaded['giuh_ordinates'])
+        #self.giuh_ordinates             = np.array([0.3,0.1,0.1,0.1,0.1,0.1,0.1,0.1])
 
         # ___________________________________________________
         # OPTIONAL CONFIGURATIONS

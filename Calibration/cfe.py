@@ -16,11 +16,11 @@ class CFE():
         cfe_state.reduced_potential_et_m_per_timestep = cfe_state.potential_et_m_per_s * cfe_state.time_step_size
 
         # ---------------- DEBUG ------------- # 
-        if (cfe_state.current_time_step >= 100 and cfe_state.current_time_step <=110): 
-            print("---------------- Current Timestep: " + str(cfe_state.current_time_step) + "----------------")
-            print("rainfall_input: {:10.4e} m. ".format(cfe_state.timestep_rainfall_input_m))
-            print("pet: {:10.4e} m.".format(cfe_state.potential_et_m_per_timestep))
-            print("reduced et: {:10.4e} m. \n".format(cfe_state.reduced_potential_et_m_per_timestep))
+        # if (cfe_state.current_time_step >= 100 and cfe_state.current_time_step <=110): 
+        #     print("---------------- Current Timestep: " + str(cfe_state.current_time_step) + "----------------")
+        #     print("rainfall_input: {:10.4e} m. ".format(cfe_state.timestep_rainfall_input_m))
+        #     print("pet: {:10.4e} m.".format(cfe_state.potential_et_m_per_timestep))
+        #     print("reduced et: {:10.4e} m. \n".format(cfe_state.reduced_potential_et_m_per_timestep))
         # ------------------------------------ #
 
         # ---------------------- SUBROUTINE ---------------------- #
@@ -36,13 +36,13 @@ class CFE():
         cfe_state.volout += cfe_state.actual_et_from_rain_m_per_timestep
         
         # ---------------- DEBUG ------------- #
-        if (cfe_state.current_time_step >= 100 and cfe_state.current_time_step <=110): 
-            print("after rainfall et: ")
-            print("rainfall_input: {:10.4e} m ".format(cfe_state.timestep_rainfall_input_m))
-            print("et from rain: {:10.4e} m".format(cfe_state.actual_et_from_rain_m_per_timestep))
-            print("reduced et: {:10.4e} m".format(cfe_state.reduced_potential_et_m_per_timestep))
-            print("soil storage: {:10.4e} m".format(cfe_state.soil_reservoir['storage_m']))
-            print("total out vol: {:10.4e} m\n".format(cfe_state.volout))
+        # if (cfe_state.current_time_step >= 100 and cfe_state.current_time_step <=110): 
+        #     print("after rainfall et: ")
+        #     print("rainfall_input: {:10.4e} m ".format(cfe_state.timestep_rainfall_input_m))
+        #     print("et from rain: {:10.4e} m".format(cfe_state.actual_et_from_rain_m_per_timestep))
+        #     print("reduced et: {:10.4e} m".format(cfe_state.reduced_potential_et_m_per_timestep))
+        #     print("soil storage: {:10.4e} m".format(cfe_state.soil_reservoir['storage_m']))
+        #     print("total out vol: {:10.4e} m\n".format(cfe_state.volout))
         # ------------------------------------ #
 
         # ---------------------- SUBROUTINE ---------------------- #
@@ -63,13 +63,13 @@ class CFE():
                                                  cfe_state.soil_reservoir['storage_m'])
         
         # ---------------- DEBUG ------------- #
-        if (cfe_state.current_time_step >= 100 and cfe_state.current_time_step <=110): 
-            print("after soil et: ")
-            print("rainfall_input: {:10.4e} m ".format(cfe_state.timestep_rainfall_input_m))
-            print("et from soil: {:10.4e} m".format(cfe_state.actual_et_from_soil_m_per_timestep))
-            print("soil storage: {:10.4e} m".format(cfe_state.soil_reservoir['storage_m']))
-            print("soil storage deficit: {:10.4e}".format(cfe_state.soil_reservoir_storage_deficit_m))
-            print("total out vol: {:10.4e} m,\n".format(cfe_state.volout))
+        # if (cfe_state.current_time_step >= 100 and cfe_state.current_time_step <=110): 
+        #     print("after soil et: ")
+        #     print("rainfall_input: {:10.4e} m ".format(cfe_state.timestep_rainfall_input_m))
+        #     print("et from soil: {:10.4e} m".format(cfe_state.actual_et_from_soil_m_per_timestep))
+        #     print("soil storage: {:10.4e} m".format(cfe_state.soil_reservoir['storage_m']))
+        #     print("soil storage deficit: {:10.4e}".format(cfe_state.soil_reservoir_storage_deficit_m))
+        #     print("total out vol: {:10.4e} m,\n".format(cfe_state.volout))
         # ------------------------------------ #
 
         # ---------------------- SUBROUTINE ---------------------- #
@@ -97,12 +97,12 @@ class CFE():
             cfe_state.soil_reservoir_storage_deficit_m = 0
         
         # ---------------- DEBUG ------------- #
-        if (cfe_state.current_time_step >= 100 and cfe_state.current_time_step <=110): 
-            print(f"After direct runoff function: ") 
-            print("rain: {:10.4e} m,".format(cfe_state.timestep_rainfall_input_m))
-            print("runoff/timestep: {:10.4e} m,".format(cfe_state.surface_runoff_depth_m)) 
-            print("soil storage: {:10.4e} m".format(cfe_state.soil_reservoir['storage_m']))
-            print("soil storage deficit: {:10.4e}".format(cfe_state.soil_reservoir_storage_deficit_m))
+        # if (cfe_state.current_time_step >= 100 and cfe_state.current_time_step <=110): 
+        #     print(f"After direct runoff function: ") 
+        #     print("rain: {:10.4e} m,".format(cfe_state.timestep_rainfall_input_m))
+        #     print("runoff/timestep: {:10.4e} m,".format(cfe_state.surface_runoff_depth_m)) 
+        #     print("soil storage: {:10.4e} m".format(cfe_state.soil_reservoir['storage_m']))
+        #     print("soil storage deficit: {:10.4e}".format(cfe_state.soil_reservoir_storage_deficit_m))
             
         # ------------------------------------ #
 
@@ -111,10 +111,10 @@ class CFE():
         cfe_state.vol_sch_infilt += cfe_state.infiltration_depth_m
 
         # ---------------- DEBUG ------------- #
-        if (cfe_state.current_time_step >= 100 and cfe_state.current_time_step <=110): 
-            print("runoff volume: {:10.4e} m,".format(cfe_state.vol_sch_runoff))
-            print("infiltration volume: {:10.4e} m,".format(cfe_state.vol_sch_infilt)) 
-            print("residual:{:10.4e} m \n".format(cfe_state.timestep_rainfall_input_m-cfe_state.surface_runoff_depth_m-cfe_state.infiltration_depth_m))
+        # if (cfe_state.current_time_step >= 100 and cfe_state.current_time_step <=110): 
+        #     print("runoff volume: {:10.4e} m,".format(cfe_state.vol_sch_runoff))
+        #     print("infiltration volume: {:10.4e} m,".format(cfe_state.vol_sch_infilt)) 
+        #     print("residual:{:10.4e} m \n".format(cfe_state.timestep_rainfall_input_m-cfe_state.surface_runoff_depth_m-cfe_state.infiltration_depth_m))
         # ------------------------------------ #
 
         # ________________________________________________
@@ -132,12 +132,12 @@ class CFE():
             cfe_state.soil_reservoir_storage_deficit_m = 0
         
         # ---------------- DEBUG ------------- #
-        if (cfe_state.current_time_step >= 100 and cfe_state.current_time_step <=110): 
-            print("after previous step percolation: ")
-            print("soil storage: {:10.4e} m".format(cfe_state.soil_reservoir['storage_m']))
-            print("soil storage deficit: {:10.4e}".format(cfe_state.soil_reservoir_storage_deficit_m))
-            print("runoff volume: {:10.4e} m,".format(cfe_state.vol_sch_runoff))
-            print("infiltration volume: {:10.4e} mm,\n".format(cfe_state.vol_sch_infilt)) 
+        # if (cfe_state.current_time_step >= 100 and cfe_state.current_time_step <=110): 
+        #     print("after previous step percolation: ")
+        #     print("soil storage: {:10.4e} m".format(cfe_state.soil_reservoir['storage_m']))
+        #     print("soil storage deficit: {:10.4e}".format(cfe_state.soil_reservoir_storage_deficit_m))
+        #     print("runoff volume: {:10.4e} m,".format(cfe_state.vol_sch_runoff))
+        #     print("infiltration volume: {:10.4e} mm,\n".format(cfe_state.vol_sch_infilt)) 
         # ------------------------------------ #
 
         # ________________________________________________
@@ -149,8 +149,8 @@ class CFE():
         self.conceptual_reservoir_flux_calc(cfe_state, cfe_state.soil_reservoir)
 
         # ________________________________________________
-        cfe_state.flux_perc_m = cfe_state.primary_flux  #percolation_flux
-        cfe_state.flux_lat_m = cfe_state.secondary_flux # lateral_flux
+        cfe_state.flux_perc_m = cfe_state.primary_flux_m  #percolation_flux
+        cfe_state.flux_lat_m = cfe_state.secondary_flux_m # lateral_flux
 
         # ________________________________________________
         cfe_state.gw_reservoir_storage_deficit_m = cfe_state.gw_reservoir['storage_max_m'] - cfe_state.gw_reservoir['storage_m']
@@ -173,14 +173,14 @@ class CFE():
         cfe_state.volout                       = cfe_state.volout + cfe_state.flux_lat_m
 
         # ---------------- DEBUG ------------- #
-        if (cfe_state.current_time_step >= 100 and cfe_state.current_time_step <=110): 
-            print("after soil reservoir flux calculation: ")
-            print("rain: {:10.4e} m,".format(cfe_state.timestep_rainfall_input_m))
-            print("soil storage: {:10.4e} m".format(cfe_state.soil_reservoir['storage_m']))
-            print("soil storage deficit: {:10.4e}".format(cfe_state.soil_reservoir_storage_deficit_m))
-            print("runoff volume: {:10.4e} m,".format(cfe_state.vol_sch_runoff))
-            print("infiltration volume: {:10.4e} m,".format(cfe_state.vol_sch_infilt)) 
-            print("total out vol.:{:10.4e} m\n".format(cfe_state.volout))
+        # if (cfe_state.current_time_step >= 100 and cfe_state.current_time_step <=110): 
+        #     print("after soil reservoir flux calculation: ")
+        #     print("rain: {:10.4e} m,".format(cfe_state.timestep_rainfall_input_m))
+        #     print("soil storage: {:10.4e} m".format(cfe_state.soil_reservoir['storage_m']))
+        #     print("soil storage deficit: {:10.4e}".format(cfe_state.soil_reservoir_storage_deficit_m))
+        #     print("runoff volume: {:10.4e} m,".format(cfe_state.vol_sch_runoff))
+        #     print("infiltration volume: {:10.4e} m,".format(cfe_state.vol_sch_infilt)) 
+        #     print("total out vol.:{:10.4e} m\n".format(cfe_state.volout))
         # ------------------------------------ #
         
         # ---------------------- SUBROUTINE ---------------------- #
@@ -188,7 +188,7 @@ class CFE():
         self.conceptual_reservoir_flux_calc(cfe_state, cfe_state.gw_reservoir) 
             
         # ________________________________________________
-        cfe_state.flux_from_deep_gw_to_chan_m = cfe_state.primary_flux
+        cfe_state.flux_from_deep_gw_to_chan_m = cfe_state.primary_flux_m
 
         if (cfe_state.flux_from_deep_gw_to_chan_m > cfe_state.gw_reservoir['storage_m']): 
             cfe_state.flux_from_deep_gw_to_chan_m = cfe_state.gw_reservoir['storage_m']
@@ -205,14 +205,14 @@ class CFE():
         cfe_state.gw_reservoir['storage_m'] -= cfe_state.flux_from_deep_gw_to_chan_m
         
         # ---------------- DEBUG ------------- #
-        if (cfe_state.current_time_step >= 100 and cfe_state.current_time_step <=110): 
-            print("after gw reservoir flux calculation: ")
-            print("soil storage: {:10.4e} m".format(cfe_state.soil_reservoir['storage_m']))
-            print("soil storage deficit: {:10.4e}".format(cfe_state.soil_reservoir_storage_deficit_m))
-            print("rain: {:10.4e} m,".format(cfe_state.timestep_rainfall_input_m))
-            print("runoff volume: {:10.4e} m,".format(cfe_state.vol_sch_runoff))
-            print("infiltration volume: {:10.4e} m,".format(cfe_state.vol_sch_infilt)) 
-            print("total out vol: {:10.4e} m,\n".format(cfe_state.volout))
+        # if (cfe_state.current_time_step >= 100 and cfe_state.current_time_step <=110): 
+        #     print("after gw reservoir flux calculation: ")
+        #     print("soil storage: {:10.4e} m".format(cfe_state.soil_reservoir['storage_m']))
+        #     print("soil storage deficit: {:10.4e}".format(cfe_state.soil_reservoir_storage_deficit_m))
+        #     print("rain: {:10.4e} m,".format(cfe_state.timestep_rainfall_input_m))
+        #     print("runoff volume: {:10.4e} m,".format(cfe_state.vol_sch_runoff))
+        #     print("infiltration volume: {:10.4e} m,".format(cfe_state.vol_sch_infilt)) 
+        #     print("total out vol: {:10.4e} m,\n".format(cfe_state.volout))
         # ------------------------------------ #
 
         # ---------------------- SUBROUTINE ---------------------- #
@@ -225,12 +225,12 @@ class CFE():
         cfe_state.volout += cfe_state.flux_from_deep_gw_to_chan_m
         
         # ---------------- DEBUG ------------- #
-        if cfe_state.current_time_step >= 100 and cfe_state.current_time_step <=110: 
-            print("after giuh cascade: ")
-            print("soil storage: {:10.4e} m".format(cfe_state.soil_reservoir['storage_m']))
-            print("soil storage deficit: {:10.4e}".format(cfe_state.soil_reservoir_storage_deficit_m))
-            print("rain: {:10.4e} m,".format(cfe_state.timestep_rainfall_input_m))
-            print("total out vol.:{:10.4e} m\n".format(cfe_state.volout))
+        # if cfe_state.current_time_step >= 100 and cfe_state.current_time_step <=110: 
+        #     print("after giuh cascade: ")
+        #     print("soil storage: {:10.4e} m".format(cfe_state.soil_reservoir['storage_m']))
+        #     print("soil storage deficit: {:10.4e}".format(cfe_state.soil_reservoir_storage_deficit_m))
+        #     print("rain: {:10.4e} m,".format(cfe_state.timestep_rainfall_input_m))
+        #     print("total out vol.:{:10.4e} m\n".format(cfe_state.volout))
         # ------------------------------------ #    
 
         # ---------------------- SUBROUTINE ---------------------- #
