@@ -56,6 +56,9 @@ metrics <- metrics %>% select(-c(model))
 signatures <- merge(signatures, metrics, by = 'basin_id')
 names(signatures)
 
+## Save to a new file
+write.csv(signatures, 'all_sigs_metrics.csv')
+
 ######################
 # RUNOFF RATIO ####
 ######################
@@ -79,12 +82,14 @@ RR_p <- ggplot()+
   theme_bw()+
   labs(color = "Model")+
   scale_fill_manual(labels=c('CFE', 'LSTM'), values = c("red", "blue"))+
-  theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size = 16),
-        axis.title = element_text(size = 18),
-        legend.title = element_text(size = 18),
-        legend.text = element_text(size = 18),
-        legend.position = 'none'
+  scale_size(range = c(0, 2))+
+  theme(plot.title = element_text(hjust = 0.5, size = 10),
+        axis.text = element_text(size = 8),
+        axis.title = element_text(size = 10),
+        legend.title = element_text(size = 10),
+        legend.text = element_text(size = 10),
+        legend.position = 'none',
+        aspect.ratio = 1
   )
 
 RR_p
@@ -112,14 +117,15 @@ BFI_p <- ggplot()+
   theme_bw()+
   labs(color = "Model")+
   scale_fill_manual(labels=c('CFE', 'LSTM'), values = c("red", "blue"))+
-  theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size = 16),
-        axis.title = element_text(size = 18),
-        legend.title = element_text(size = 18),
-        legend.text = element_text(size = 18),
-        legend.position = 'none'
+  scale_size(range = c(0, 2))+
+  theme(plot.title = element_text(hjust = 0.5, size = 10),
+        axis.text = element_text(size = 8),
+        axis.title = element_text(size = 10),
+        legend.title = element_text(size = 10),
+        legend.text = element_text(size = 10),
+        legend.position = 'none',
+        aspect.ratio = 1
   )
-
 
 BFI_p
 
@@ -146,17 +152,17 @@ Qmean_p <- ggplot()+
   theme_bw()+
   labs(color = "Model")+
   scale_fill_manual(labels=c('CFE', 'LSTM'), values = c("red", "blue"))+
-  theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size = 16),
-        axis.title = element_text(size = 18),
-        legend.title = element_text(size = 18),
-        legend.text = element_text(size = 18),
-        legend.position = 'none'
+  scale_size(range = c(0, 2))+
+  theme(plot.title = element_text(hjust = 0.5, size = 10),
+        axis.text = element_text(size = 8),
+        axis.title = element_text(size = 10),
+        legend.title = element_text(size = 10),
+        legend.text = element_text(size = 10),
+        legend.position = 'none',
+        aspect.ratio = 1
   )
 
-
 Qmean_p
-
 
 ######################
 # FDC Slope ####
@@ -174,19 +180,21 @@ FDC_Slope <- rbind(FDC_Slope_lstm, FDC_Slope_cfe)
 
 FDC_Slope_p <- ggplot()+
   geom_point(data = FDC_Slope, mapping = aes(x = FDC_Slope_qsim, y = FDC_Slope_qobs, fill = model, size = NNSE), shape = 21, color = 'black', alpha = 0.6)+
-  labs(x = 'Simulated', y = 'Observed', title = 'Slope of the Flow Duration Curve', fill = 'Model')+
+  labs(x = 'Simulated', y = 'Observed', title = 'Slope of Flow Duration Curve', fill = 'Model')+
   geom_abline(intercept = 0, slope = 1)+
   xlim(0,55)+
   ylim(0,55)+
   theme_bw()+
   labs(color = "Model")+
   scale_fill_manual(labels=c('CFE', 'LSTM'), values = c("red", "blue"))+
-  theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size = 16),
-        axis.title = element_text(size = 18),
-        legend.title = element_text(size = 18),
-        legend.text = element_text(size = 18),
-        legend.position = 'none'
+  scale_size(range = c(0, 2))+
+  theme(plot.title = element_text(hjust = 0.5, size = 10),
+        axis.text = element_text(size = 8),
+        axis.title = element_text(size = 10),
+        legend.title = element_text(size = 10),
+        legend.text = element_text(size = 10),
+        legend.position = 'none',
+        aspect.ratio = 1
   )
 
 FDC_Slope_p
@@ -214,17 +222,17 @@ Q95_p <- ggplot()+
   theme_bw()+
   labs(color = "Model")+
   scale_fill_manual(labels=c('CFE', 'LSTM'), values = c("red", "blue"))+
-  theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size = 16),
-        axis.title = element_text(size = 18),
-        legend.title = element_text(size = 18),
-        legend.text = element_text(size = 18),
-        legend.position = 'none'
+  scale_size(range = c(0, 2))+
+  theme(plot.title = element_text(hjust = 0.5, size = 10),
+        axis.text = element_text(size = 8),
+        axis.title = element_text(size = 10),
+        legend.title = element_text(size = 10),
+        legend.text = element_text(size = 10),
+        legend.position = 'none',
+        aspect.ratio = 1
   )
 
-
 Q95_p
-
 
 ######################
 # 5TH PERCENTILE FLOW ####
@@ -249,23 +257,20 @@ Q5_p <- ggplot()+
   theme_bw()+
   labs(color = "Model")+
   scale_fill_manual(labels=c('CFE', 'LSTM'), values = c("red", "blue"))+
-  theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size = 16),
-        axis.title = element_text(size = 18),
-        legend.title = element_text(size = 18),
-        legend.text = element_text(size = 18),
-        legend.position = 'none'
-  )
-
+  scale_size(range = c(0, 2))+
+  theme(plot.title = element_text(hjust = 0.5, size = 10),
+        axis.text = element_text(size = 8),
+        axis.title = element_text(size = 10),
+        legend.title = element_text(size = 10),
+        legend.text = element_text(size = 10),
+        legend.position = 'none',
+        aspect.ratio = 1)
 
 Q5_p
-
 
 ######################
 # NO FLOW FREQUENCY ####
 ######################
-
-
 
 
 ######################
@@ -291,13 +296,14 @@ HFD_Mean_p <- ggplot()+
   theme_bw()+
   labs(color = "Model")+
   scale_fill_manual(labels=c('CFE', 'LSTM'), values = c("red", "blue"))+
-  theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size = 16),
-        axis.title = element_text(size = 18),
-        legend.title = element_text(size = 18),
-        legend.text = element_text(size = 18),
-        legend.position = 'none'
-  )
+  scale_size(range = c(0, 2))+
+  theme(plot.title = element_text(hjust = 0.5, size = 10),
+        axis.text = element_text(size = 8),
+        axis.title = element_text(size = 10),
+        legend.title = element_text(size = 10),
+        legend.text = element_text(size = 10),
+        legend.position = 'none',
+        aspect.ratio = 1)
 
 
 HFD_Mean_p
@@ -325,14 +331,14 @@ Stream_Elas_p <- ggplot()+
   theme_bw()+
   labs(color = "Model")+
   scale_fill_manual(labels=c('CFE', 'LSTM'), values = c("red", "blue"))+
-  theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size = 16),
-        axis.title = element_text(size = 18),
-        legend.title = element_text(size = 18),
-        legend.text = element_text(size = 18),
-        legend.position = 'none'
-        )
-
+  scale_size(range = c(0, 2))+
+  theme(plot.title = element_text(hjust = 0.5, size = 10),
+        axis.text = element_text(size = 8),
+        axis.title = element_text(size = 10),
+        legend.title = element_text(size = 10),
+        legend.text = element_text(size = 10),
+        legend.position = 'none',
+        aspect.ratio = 1)
 
 Stream_Elas_p
 
@@ -360,16 +366,14 @@ ZeroQ_Freq_p <- ggplot()+
   theme_bw()+
   labs(color = "Model")+
   scale_fill_manual(labels=c('CFE', 'LSTM'), values = c("red", "blue"))+
-  theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size = 16),
-        axis.title = element_text(size = 18),
-        legend.title = element_text(size = 18),
-        legend.text = element_text(size = 18),
+  theme(plot.title = element_text(hjust = 0.5, size = 10),
+        axis.text = element_text(size = 8),
+        axis.title = element_text(size = 10),
+        legend.title = element_text(size = 10),
+        legend.text = element_text(size = 10),
         legend.position = 'bottom'
-  )+
-  guides(fill = guide_legend(override.aes = list(size=6)))
-
-
+        )+
+  guides(fill = guide_legend(override.aes = list(size=2)))
 
 ZeroQ_Freq_p
 
@@ -396,20 +400,37 @@ LowQ_Freq_p <- ggplot()+
   theme_bw()+
   labs(color = "Model")+
   scale_fill_manual(labels=c('CFE', 'LSTM'), values = c("red", "blue"))+
-  theme(plot.title = element_text(hjust = 0.5, size = 20),
-        axis.text = element_text(size = 16),
-        axis.title = element_text(size = 18),
-        legend.title = element_text(size = 18),
-        legend.text = element_text(size = 18),
-        legend.position = 'bottom'
-  )+
-  guides(fill = guide_legend(override.aes = list(size=6)))
+  scale_size(range = c(0, 2))+
+  theme(plot.title = element_text(hjust = 0.5, size = 10),
+        axis.text = element_text(size = 8),
+        axis.title = element_text(size = 10),
+        legend.title = element_text(size = 10),
+        legend.text = element_text(size = 10),
+        legend.position = 'left',
+        legend.spacing = unit(1, 'mm')
+        )+guides(fill = guide_legend(override.aes = list(size=1.5)))
+legend <- cowplot::get_legend(LowQ_Freq_p)
+
+
 LowQ_Freq_p
 
 
-p_grid <- grid.arrange(ZeroQ_Freq_p, LowQ_Freq_p, BFI_p, RR_p, Q95_p, Q5_p, Qmean_p, FDC_Slope_p, HFD_Mean_p, Stream_Elas_p, nrow = 5)
-p_grid
-ggsave(plot = p_grid, filename = "signature_scatters.png", dpi = 400, device = NULL)
+p_grid <- grid.arrange(
+  # ZeroQ_Freq_p, LowQ_Freq_p,
+  BFI_p, RR_p, 
+  Q95_p, Q5_p, 
+  Qmean_p, FDC_Slope_p, 
+  HFD_Mean_p, Stream_Elas_p, 
+  legend,
+  nrow = 3
+  # heights=unit(c(0.01, 1.5, 1.5, 1.5, 1.5), c("in", "in", "in", "in", "in")),
+  # widths=unit(c(1.5, 1.5), c("in", "in"))
+                       )
+# p_grid
+
+ggsave(plot = p_grid, filename = "signature_scatters.png", dpi = 400, 
+       device = NULL)
+
 ## Calculate the difference between simulated sigs for each model and observed sigs
 signatures <- signatures %>% 
   mutate(
@@ -487,26 +508,51 @@ mid = 0
 ######################
 # BASEFLOW INDEX ####
 ######################
-ggplot(data = states)+
+bfi_lstm_p_leg <- ggplot(data = states)+
   geom_sf(fill = "white", size = 0.25, color = "black") +
   coord_sf(xlim = c(-128, -65), ylim = c(24, 50), expand = FALSE)+
-  geom_point(data = signatures_diff, mapping = aes(x = LONG, y = LAT, color = BFI_diff_lstm))+
-  labs(color = "Difference in BFI", x = "", y = "", title = "LSTM")+
-  scale_color_gradient2(midpoint = mid, low = "blue", mid = "white",
+  geom_point(data = signatures_diff, mapping = aes(x = LONG, y = LAT, fill = BFI_diff_lstm), shape = 21)+
+  labs(fill = "Observed BFI - Simulated BFI", x = "", y = "", title = "LSTM")+
+  scale_fill_gradient2(midpoint = mid, low = "blue", mid = "white",
                         high = "red", limits=c(floor(rng[1]), ceiling(rng[2])))+
   theme_bw()+
-  theme(plot.title = element_text(hjust = 0.5), panel.grid.major = element_blank())
+  theme(plot.title = element_text(hjust = 0.5), 
+        panel.grid.major = element_blank(),
+        legend.position = 'bottom',
+        legend.title = element_text(size = 10))
 
-ggplot(data = states)+
+legend <- cowplot::get_legend(bfi_lstm_p_leg)
+
+bfi_lstm_p <- ggplot(data = states)+
   geom_sf(fill = "white", size = 0.25, color = "black") +
   coord_sf(xlim = c(-128, -65), ylim = c(24, 50), expand = FALSE)+
-  geom_point(data = signatures_diff, mapping = aes(x = LONG, y = LAT, color = BFI_diff_cfe))+
-  labs(color = "Difference in BFI", x = "", y = "", title = "CFE")+
-  scale_color_gradient2(midpoint = mid, low = "blue", mid = "white",
-                        high = "red", limits=c(floor(rng[1]), ceiling(rng[2])))+
+  geom_point(data = signatures_diff, mapping = aes(x = LONG, y = LAT, fill = BFI_diff_lstm), shape = 21)+
+  labs(fill = "Difference in BFI", x = "", y = "", title = "LSTM")+
+  scale_fill_gradient2(midpoint = mid, low = "blue", mid = "white",
+                       high = "red", limits=c(floor(rng[1]), ceiling(rng[2])))+
   theme_bw()+
-  theme(plot.title = element_text(hjust = 0.5), panel.grid.major = element_blank())
+  theme(plot.title = element_text(hjust = 0.5), 
+        panel.grid.major = element_blank(),
+        legend.position = 'none',
+        plot.margin = unit(c(1,1,1,1), "mm"))
 
+
+bfi_cfe_p <- ggplot(data = states)+
+  geom_sf(fill = "white", size = 0.25, color = "black") +
+  coord_sf(xlim = c(-128, -65), ylim = c(24, 50), expand = FALSE)+
+  geom_point(data = signatures_diff, mapping = aes(x = LONG, y = LAT, fill = BFI_diff_cfe), shape = 21)+
+  labs(fill = "Difference in BFI", x = "", y = "", title = "CFE")+
+  scale_fill_gradient2(midpoint = mid, low = "blue", mid = "white",
+                       high = "red", limits=c(floor(rng[1]), ceiling(rng[2])))+
+  theme_bw()+
+  theme(plot.title = element_text(hjust = 0.5), 
+        panel.grid.major = element_blank(),
+        legend.position = 'none',
+        plot.margin = unit(c(1,1,1,1), "mm"))
+
+map_grid <- grid.arrange(bfi_lstm_p,bfi_cfe_p, legend, nrow = 3,
+                         heights=unit(c(2.5, 2.5, 0.75), c("in", "in", "in"))
+)
 
 ######################
 # RUNOFF RATIO ####
