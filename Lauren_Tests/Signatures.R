@@ -5,6 +5,7 @@ library(viridisLite)
 library(rnaturalearth)
 library(rnaturalearthdata)
 library(gridExtra)
+library(grid)
 library(rnaturalearthhires)
 library(data.table)
 library(ggpubr)
@@ -77,19 +78,20 @@ RR_p <- ggplot()+
   geom_point(data = RR, mapping = aes(x = RR_qsim, y = RR_qobs, fill = model, size = NNSE), shape = 21, color = 'black', alpha = 0.6)+
   xlim(0,1)+
   ylim(0,1)+
-  labs(x = 'Simulated', y = 'Observed', title = 'Runoff Ratio', fill = 'Model')+
+  labs(x = '', y = '', title = 'Runoff Ratio', fill = 'Model')+
   geom_abline(intercept = 0, slope = 1)+
   theme_bw()+
   labs(color = "Model")+
   scale_fill_manual(labels=c('CFE', 'LSTM'), values = c("red", "blue"))+
   scale_size(range = c(0, 2))+
-  theme(plot.title = element_text(hjust = 0.5, size = 10),
+  theme(plot.title = element_text(hjust = 0.5, size = 9),
         axis.text = element_text(size = 8),
         axis.title = element_text(size = 10),
         legend.title = element_text(size = 10),
         legend.text = element_text(size = 10),
         legend.position = 'none',
-        aspect.ratio = 1
+        aspect.ratio = 1,
+        plot.margin = unit(c(-1,1,-0.75,0.5), "mm")
   )
 
 RR_p
@@ -112,19 +114,20 @@ BFI_p <- ggplot()+
   geom_point(data = BFI, mapping = aes(x = BFI_qsim, y = BFI_qobs, fill = model, size = NNSE), shape = 21, color = 'black', alpha = 0.6)+
   xlim(0,1)+
   ylim(0,1)+
-  labs(x = 'Simulated', y = 'Observed', title = 'Baseflow Index', fill = 'Model')+
+  labs(x = '', y = 'Observed', title = 'Baseflow Index', fill = 'Model')+
   geom_abline(intercept = 0, slope = 1)+
   theme_bw()+
   labs(color = "Model")+
   scale_fill_manual(labels=c('CFE', 'LSTM'), values = c("red", "blue"))+
   scale_size(range = c(0, 2))+
-  theme(plot.title = element_text(hjust = 0.5, size = 10),
+  theme(plot.title = element_text(hjust = 0.5, size = 9),
         axis.text = element_text(size = 8),
         axis.title = element_text(size = 10),
         legend.title = element_text(size = 10),
         legend.text = element_text(size = 10),
         legend.position = 'none',
-        aspect.ratio = 1
+        aspect.ratio = 1,
+        plot.margin = unit(c(-1,1,-0.75,0.5), "mm")
   )
 
 BFI_p
@@ -145,7 +148,7 @@ Qmean <- rbind(Qmean_lstm, Qmean_cfe)
 
 Qmean_p <- ggplot()+
   geom_point(data = Qmean, mapping = aes(x = Qmean_qsim, y = Qmean_qobs, fill = model, size = NNSE), shape = 21, color = 'black', alpha = 0.6)+
-  labs(x = 'Simulated', y = 'Observed', title = 'Mean Streamflow (mm/hr)', fill = 'Model')+
+  labs(x = 'Simulated', y = '', title = 'Mean Flow (mm/hr)', fill = 'Model')+
   geom_abline(intercept = 0, slope = 1)+
   xlim(0, 0.5)+
   ylim(0, 0.5)+
@@ -153,13 +156,14 @@ Qmean_p <- ggplot()+
   labs(color = "Model")+
   scale_fill_manual(labels=c('CFE', 'LSTM'), values = c("red", "blue"))+
   scale_size(range = c(0, 2))+
-  theme(plot.title = element_text(hjust = 0.5, size = 10),
+  theme(plot.title = element_text(hjust = 0.5, size = 9),
         axis.text = element_text(size = 8),
         axis.title = element_text(size = 10),
         legend.title = element_text(size = 10),
         legend.text = element_text(size = 10),
         legend.position = 'none',
-        aspect.ratio = 1
+        aspect.ratio = 1,
+        plot.margin = unit(c(-1,1,-0.75,0.5), "mm")
   )
 
 Qmean_p
@@ -180,7 +184,7 @@ FDC_Slope <- rbind(FDC_Slope_lstm, FDC_Slope_cfe)
 
 FDC_Slope_p <- ggplot()+
   geom_point(data = FDC_Slope, mapping = aes(x = FDC_Slope_qsim, y = FDC_Slope_qobs, fill = model, size = NNSE), shape = 21, color = 'black', alpha = 0.6)+
-  labs(x = 'Simulated', y = 'Observed', title = 'Slope of Flow Duration Curve', fill = 'Model')+
+  labs(x = 'Simulated', y = '', title = 'FDC Slope', fill = 'Model')+
   geom_abline(intercept = 0, slope = 1)+
   xlim(0,55)+
   ylim(0,55)+
@@ -188,13 +192,14 @@ FDC_Slope_p <- ggplot()+
   labs(color = "Model")+
   scale_fill_manual(labels=c('CFE', 'LSTM'), values = c("red", "blue"))+
   scale_size(range = c(0, 2))+
-  theme(plot.title = element_text(hjust = 0.5, size = 10),
+  theme(plot.title = element_text(hjust = 0.5, size = 9),
         axis.text = element_text(size = 8),
         axis.title = element_text(size = 10),
         legend.title = element_text(size = 10),
         legend.text = element_text(size = 10),
         legend.position = 'none',
-        aspect.ratio = 1
+        aspect.ratio = 1,
+        plot.margin = unit(c(-1,1,-0.75,0.5), "mm")
   )
 
 FDC_Slope_p
@@ -215,7 +220,7 @@ Q95 <- rbind(Q95_lstm, Q95_cfe)
 
 Q95_p <- ggplot()+
   geom_point(data = Q95, mapping = aes(x = Q95_qsim, y = Q95_qobs, fill = model, size = NNSE), shape = 21, color = 'black', alpha = 0.6)+
-  labs(x = 'Simulated', y = 'Observed', title = '95th Percentile Flow (mm/hr)', fill = 'Model')+
+  labs(x = '', y = '', title = 'Q95 (mm/hr)', fill = 'Model')+
   geom_abline(intercept = 0, slope = 1)+
   xlim(0,2)+
   ylim(0,2)+
@@ -223,13 +228,14 @@ Q95_p <- ggplot()+
   labs(color = "Model")+
   scale_fill_manual(labels=c('CFE', 'LSTM'), values = c("red", "blue"))+
   scale_size(range = c(0, 2))+
-  theme(plot.title = element_text(hjust = 0.5, size = 10),
+  theme(plot.title = element_text(hjust = 0.5, size = 9),
         axis.text = element_text(size = 8),
         axis.title = element_text(size = 10),
         legend.title = element_text(size = 10),
         legend.text = element_text(size = 10),
         legend.position = 'none',
-        aspect.ratio = 1
+        aspect.ratio = 1,
+        plot.margin = unit(c(-1,1,-0.75,0.5), "mm")
   )
 
 Q95_p
@@ -250,7 +256,7 @@ Q5 <- rbind(Q5_lstm, Q5_cfe)
 
 Q5_p <- ggplot()+
   geom_point(data = Q5, mapping = aes(x = Q5_qsim, y = Q5_qobs, fill = model, size = NNSE), shape = 21, color = 'black', alpha = 0.6)+
-  labs(x = 'Simulated', y = 'Observed', title = '5th Percentile Flow (mm/hr)', fill = 'Model')+
+  labs(x = 'Simulated', y = 'Observed', title = 'Q5 (mm/hr)', fill = 'Model')+
   geom_abline(intercept = 0, slope = 1)+
   xlim(-0.05,0.15)+
   ylim(-0.05,0.15)+
@@ -258,13 +264,14 @@ Q5_p <- ggplot()+
   labs(color = "Model")+
   scale_fill_manual(labels=c('CFE', 'LSTM'), values = c("red", "blue"))+
   scale_size(range = c(0, 2))+
-  theme(plot.title = element_text(hjust = 0.5, size = 10),
+  theme(plot.title = element_text(hjust = 0.5, size = 9),
         axis.text = element_text(size = 8),
         axis.title = element_text(size = 10),
         legend.title = element_text(size = 10),
         legend.text = element_text(size = 10),
         legend.position = 'none',
-        aspect.ratio = 1)
+        aspect.ratio = 1,
+        plot.margin = unit(c(-1,1,-0.75,0.5), "mm"))
 
 Q5_p
 
@@ -289,7 +296,7 @@ HFD_Mean <- rbind(HFD_Mean_lstm, HFD_Mean_cfe)
 
 HFD_Mean_p <- ggplot()+
   geom_point(data = HFD_Mean, mapping = aes(x = HFD_Mean_qsim, y = HFD_Mean_qobs, fill = model, size = NNSE), shape = 21, color = 'black', alpha = 0.6)+
-  labs(x = 'Simulated', y = 'Observed', title = 'Mean Half Flow Date (timestep)', fill = 'Model')+
+  labs(x = '', y = '', title = 'Mean HFD (timestep)', fill = 'Model')+
   geom_abline(intercept = 0, slope = 1)+
   xlim(0,5500)+
   ylim(0,5500)+
@@ -297,13 +304,14 @@ HFD_Mean_p <- ggplot()+
   labs(color = "Model")+
   scale_fill_manual(labels=c('CFE', 'LSTM'), values = c("red", "blue"))+
   scale_size(range = c(0, 2))+
-  theme(plot.title = element_text(hjust = 0.5, size = 10),
+  theme(plot.title = element_text(hjust = 0.5, size = 9),
         axis.text = element_text(size = 8),
         axis.title = element_text(size = 10),
         legend.title = element_text(size = 10),
         legend.text = element_text(size = 10),
         legend.position = 'none',
-        aspect.ratio = 1)
+        aspect.ratio = 1,
+        plot.margin = unit(c(-1,1,-0.75,0.5), "mm"))
 
 
 HFD_Mean_p
@@ -324,7 +332,7 @@ Stream_Elas <- rbind(Stream_Elas_lstm, Stream_Elas_cfe)
 
 Stream_Elas_p <- ggplot()+
   geom_point(data = Stream_Elas, mapping = aes(x = Stream_Elas_qsim, y = Stream_Elas_qobs, fill = model, size = NNSE), shape = 21, color = 'black', alpha = 0.6)+
-  labs(x = 'Simulated', y = 'Observed', title = 'Stream Elasticity', fill = 'Model')+
+  labs(x = 'Simulated', y = '', title = 'Stream Elasticity', fill = 'Model')+
   geom_abline(intercept = 0, slope = 1)+
   xlim(-25,15)+
   ylim(-25,15)+
@@ -332,13 +340,14 @@ Stream_Elas_p <- ggplot()+
   labs(color = "Model")+
   scale_fill_manual(labels=c('CFE', 'LSTM'), values = c("red", "blue"))+
   scale_size(range = c(0, 2))+
-  theme(plot.title = element_text(hjust = 0.5, size = 10),
+  theme(plot.title = element_text(hjust = 0.5, size = 9),
         axis.text = element_text(size = 8),
         axis.title = element_text(size = 10),
         legend.title = element_text(size = 10),
         legend.text = element_text(size = 10),
         legend.position = 'none',
-        aspect.ratio = 1)
+        aspect.ratio = 1,
+        plot.margin = unit(c(-1,1,-0.75,0.5), "mm"))
 
 Stream_Elas_p
 
@@ -347,35 +356,35 @@ Stream_Elas_p
 # NO FLOW ####
 ######################
 
-ZeroQ_Freq_lstm <- signatures %>% 
-  select(c(ZeroQ_Freq_qobs, ZeroQ_Freq_qsim_lstm, lstm_nnse)) %>% 
-  mutate(model = 'LSTM') %>%
-  rename(ZeroQ_Freq_qsim = ZeroQ_Freq_qsim_lstm, NNSE = lstm_nnse)
-ZeroQ_Freq_cfe <- signatures %>% 
-  select(c(ZeroQ_Freq_qobs, ZeroQ_Freq_qsim_cfe, cfe_nnse)) %>% 
-  mutate(model = 'CFE') %>%
-  rename(ZeroQ_Freq_qsim = ZeroQ_Freq_qsim_cfe, NNSE = cfe_nnse)
-ZeroQ_Freq <- rbind(ZeroQ_Freq_lstm, ZeroQ_Freq_cfe)
-
-ZeroQ_Freq_p <- ggplot()+
-  geom_point(data = ZeroQ_Freq, mapping = aes(x = ZeroQ_Freq_qsim, y = ZeroQ_Freq_qobs, fill = model, size = NNSE), shape = 21, color = 'black', alpha = 0.6)+
-  labs(x = 'Simulated', y = 'Observed', title = 'Stream Elasticity', fill = 'Model')+
-  geom_abline(intercept = 0, slope = 1)+
-  xlim(-25,15)+
-  ylim(-25,15)+
-  theme_bw()+
-  labs(color = "Model")+
-  scale_fill_manual(labels=c('CFE', 'LSTM'), values = c("red", "blue"))+
-  theme(plot.title = element_text(hjust = 0.5, size = 10),
-        axis.text = element_text(size = 8),
-        axis.title = element_text(size = 10),
-        legend.title = element_text(size = 10),
-        legend.text = element_text(size = 10),
-        legend.position = 'bottom'
-        )+
-  guides(fill = guide_legend(override.aes = list(size=2)))
-
-ZeroQ_Freq_p
+# ZeroQ_Freq_lstm <- signatures %>% 
+#   select(c(ZeroQ_Freq_qobs, ZeroQ_Freq_qsim_lstm, lstm_nnse)) %>% 
+#   mutate(model = 'LSTM') %>%
+#   rename(ZeroQ_Freq_qsim = ZeroQ_Freq_qsim_lstm, NNSE = lstm_nnse)
+# ZeroQ_Freq_cfe <- signatures %>% 
+#   select(c(ZeroQ_Freq_qobs, ZeroQ_Freq_qsim_cfe, cfe_nnse)) %>% 
+#   mutate(model = 'CFE') %>%
+#   rename(ZeroQ_Freq_qsim = ZeroQ_Freq_qsim_cfe, NNSE = cfe_nnse)
+# ZeroQ_Freq <- rbind(ZeroQ_Freq_lstm, ZeroQ_Freq_cfe)
+# 
+# ZeroQ_Freq_p <- ggplot()+
+#   geom_point(data = ZeroQ_Freq, mapping = aes(x = ZeroQ_Freq_qsim, y = ZeroQ_Freq_qobs, fill = model, size = NNSE), shape = 21, color = 'black', alpha = 0.6)+
+#   labs(x = 'Simulated', y = 'Observed', title = 'Stream Elasticity', fill = 'Model')+
+#   geom_abline(intercept = 0, slope = 1)+
+#   xlim(-25,15)+
+#   ylim(-25,15)+
+#   theme_bw()+
+#   labs(color = "Model")+
+#   scale_fill_manual(labels=c('CFE', 'LSTM'), values = c("red", "blue"))+
+#   theme(plot.title = element_text(hjust = 0.5, size = 9),
+#         axis.text = element_text(size = 8),
+#         axis.title = element_text(size = 10),
+#         legend.title = element_text(size = 10),
+#         legend.text = element_text(size = 10),
+#         legend.position = 'bottom'
+#         )+
+#   guides(fill = guide_legend(override.aes = list(size=2)))
+# 
+# ZeroQ_Freq_p
 
 ######################
 # NO FLOW ####
@@ -401,12 +410,12 @@ LowQ_Freq_p <- ggplot()+
   labs(color = "Model")+
   scale_fill_manual(labels=c('CFE', 'LSTM'), values = c("red", "blue"))+
   scale_size(range = c(0, 2))+
-  theme(plot.title = element_text(hjust = 0.5, size = 10),
+  theme(plot.title = element_text(hjust = 0.5, size = 9),
         axis.text = element_text(size = 8),
         axis.title = element_text(size = 10),
         legend.title = element_text(size = 10),
         legend.text = element_text(size = 10),
-        legend.position = 'left',
+        legend.position = 'bottom',
         legend.spacing = unit(1, 'mm')
         )+guides(fill = guide_legend(override.aes = list(size=1.5)))
 legend <- cowplot::get_legend(LowQ_Freq_p)
@@ -414,21 +423,23 @@ legend <- cowplot::get_legend(LowQ_Freq_p)
 
 LowQ_Freq_p
 
+blank <- grid.rect(gp=gpar(col="white"))
 
 p_grid <- grid.arrange(
   # ZeroQ_Freq_p, LowQ_Freq_p,
   BFI_p, RR_p, 
-  Q95_p, Q5_p, 
-  Qmean_p, FDC_Slope_p, 
-  HFD_Mean_p, Stream_Elas_p, 
-  legend,
-  nrow = 3
-  # heights=unit(c(0.01, 1.5, 1.5, 1.5, 1.5), c("in", "in", "in", "in", "in")),
+  Q95_p,  HFD_Mean_p,
+  Q5_p, Qmean_p, FDC_Slope_p, Stream_Elas_p,
+  nrow = 2, ncol = 4,
+  heights=unit(c(2, 2), c("in", "in"))
   # widths=unit(c(1.5, 1.5), c("in", "in"))
                        )
 # p_grid
 
 ggsave(plot = p_grid, filename = "signature_scatters.png", dpi = 400, 
+       device = NULL)
+
+ggsave(plot = legend, filename = "signature_scatters_legend.png", dpi = 400, 
        device = NULL)
 
 ## Calculate the difference between simulated sigs for each model and observed sigs
