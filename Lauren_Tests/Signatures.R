@@ -21,7 +21,7 @@ sigs.lstm <- lapply(file.list.lstm, read.csv)
 sigs.lstm <- rbindlist(sigs.lstm)
 rm(file.list.lstm)
 
-sigs.cfe <- read.csv("CFE.csv")
+sigs.cfe <- read.csv("./Snowmelt/hydro_signatures/CFE_addP.csv")
 
 sigs.lstm <- sigs.lstm %>% filter(basin_id %in% sigs.cfe$basin_id)
 
@@ -58,7 +58,8 @@ signatures <- merge(signatures, metrics, by = 'basin_id')
 names(signatures)
 
 ## Save to a new file
-write.csv(signatures, 'all_sigs_metrics.csv')
+# write.csv(signatures, 'all_sigs_metrics.csv')
+write.csv(signatures, 'all_sigs_metrics_P.csv')
 
 ######################
 # RUNOFF RATIO ####
@@ -314,6 +315,7 @@ HFD_Mean_p <- ggplot()+
         plot.margin = unit(c(-1,1,-0.75,0.5), "mm"))
 
 
+
 HFD_Mean_p
 
 ######################
@@ -436,12 +438,17 @@ p_grid <- grid.arrange(
                        )
 # p_grid
 
-ggsave(plot = p_grid, filename = "signature_scatters.png", dpi = 400, 
+# ggsave(plot = p_grid, filename = "signature_scatters.png", dpi = 400, 
+#        device = NULL)
+# 
+# ggsave(plot = legend, filename = "signature_scatters_legend.png", dpi = 400, 
+#        device = NULL)
+
+ggsave(plot = p_grid, filename = "signature_scatters_P.png", dpi = 400, 
        device = NULL)
 
-ggsave(plot = legend, filename = "signature_scatters_legend.png", dpi = 400, 
+ggsave(plot = legend, filename = "signature_scatters_legend_P.png", dpi = 400, 
        device = NULL)
-
 ## Calculate the difference between simulated sigs for each model and observed sigs
 signatures <- signatures %>% 
   mutate(
