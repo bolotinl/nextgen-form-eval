@@ -20,9 +20,9 @@ dependencies:
   - brotli-bin=1.0.9=h8ffe710_7
   - brotlipy=0.7.0=py38h294d835_1004
   - bzip2=1.0.8=h8ffe710_4
-  - ca-certificates=2022.6.15=h5b45459_0
+  - ca-certificates=2022.12.7=h5b45459_0
   - cairo=1.16.0=h0ac17fb_1011
-  - certifi=2022.6.15=py38haa244fe_0
+  - certifi=2022.12.7=pyhd8ed1ab_0
   - cffi=1.15.0=py38hd8c33c5_0
   - cfitsio=4.1.0=h5a969a9_0
   - charset-normalizer=2.0.12=pyhd8ed1ab_0
@@ -223,6 +223,7 @@ dependencies:
   - widgetsnbextension=3.6.1=pyha770c72_0
   - win_inet_pton=1.1.0=py38haa244fe_4
   - winpty=0.4.3=4
+  - xarray=2022.11.0=pyhd8ed1ab_0
   - xerces-c=3.2.3=h0e60522_5
   - xorg-libxau=1.0.9=hcd874cb_0
   - xorg-libxdmcp=1.1.3=hcd874cb_0
@@ -232,4 +233,6 @@ dependencies:
   - zipp=3.8.0=pyhd8ed1ab_0
   - zlib=1.2.12=h8ffe710_1
   - zstd=1.5.2=h6255e5f_1
+  - pip:
+    - spotpy==1.5.14
 prefix: C:\Users\franc\anaconda3\envs\SITest
